@@ -1,0 +1,7 @@
+.container_schedule {
+    @apply flex flex-row items-start  p-2 m-2 rounded-md
+}
+
+.container_schedule_form {
+    @apply w-1/3 flex flex-col items-start p-1 m-2;
+}

@@ -1,0 +1,5 @@
+.search_form_container {
+  @apply flex flex-row gap-3 items-center p-3 shadow-xl rounded-lg m-3;
+}
+.search_form_btn {
+}
