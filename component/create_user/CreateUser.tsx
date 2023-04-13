@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import UserContext from "../../context/UserContext";
 import ModalUserList from "../modals/ModalUserList";
+import axios from "axios";
 
 const CreateUser = () => {
   const { user, setUser, users, setUsers, handleOpenUsers } =
@@ -19,19 +20,36 @@ const CreateUser = () => {
 
   const inputUserRef = useMemo(() => user, [user]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (user.password !== user.confirmpassword) {
       setIsMatch(false);
       setIsSuccessful(false);
     } else {
       setIsMatch(true);
-      setUsers([...users, user]);
+      await axios
+        .post("http://localhost:3000/api/users", {
+          name: inputUserRef.name,
+          password: inputUserRef.password,
+          admin: inputUserRef.admin,
+        })
+        .then((res) => console.log(res))
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
       setIsSuccessful(true);
       setUser({ name: "", password: "", confirmpassword: "", admin: false });
     }
   };
-  console.log(users, "users");
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -34,15 +34,12 @@ export default async function scheduleHandler(
           registrationNumber,
           coachClass,
           fare,
-          sold,
-          available,
-          booked,
           livingFrom,
           goingTo,
         } = req.body;
         if (
           !date ||
-          !time! ||
+          !time ||
           !coachType ||
           !coachNo ||
           !startingCounter ||
@@ -66,9 +63,6 @@ export default async function scheduleHandler(
           registrationNumber,
           coachClass,
           fare,
-          sold,
-          booked,
-          available,
           livingFrom,
           goingTo,
         };
@@ -101,9 +95,6 @@ export default async function scheduleHandler(
           registrationNumber,
           coachClass,
           fare,
-          sold,
-          available,
-          booked,
           livingFrom,
           goingTo,
         } = req.body;
@@ -142,10 +133,6 @@ export default async function scheduleHandler(
         schedule.registrationNumber = registrationNumber;
         schedule.coachClass = coachClass;
         schedule.fare = fare;
-        schedule.sold = sold;
-        schedule.booked = booked;
-        schedule.available = available;
-        schedule.booked = booked;
         schedule.livingFrom = livingFrom;
         schedule.goingTo = goingTo;
 

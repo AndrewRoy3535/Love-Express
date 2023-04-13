@@ -1,6 +1,7 @@
 import { Document, Schema, model, models } from "mongoose";
 
 interface Schedule extends Document {
+  dateAndTime: Date;
   date: string;
   time: string;
   coachType: string;
@@ -54,16 +55,6 @@ const ScheduleScheam = new Schema<Schedule>(
     fare: {
       type: Number,
       required: true,
-    },
-    sold: {
-      type: Number,
-    },
-    booked: {
-      type: Number,
-    },
-    available: {
-      type: Number,
-      default: 40,
     },
     livingFrom: {
       type: String,

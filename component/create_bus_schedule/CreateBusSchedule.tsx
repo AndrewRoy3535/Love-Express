@@ -6,6 +6,7 @@ import SecondHalfForm from "./SecondHalfForm";
 import ScheduleContext from "../../context/ScheduleContext";
 import { SetBusScheduleType } from "../types/interfaces";
 import ModalScheduleList from "../modals/ModalScheduleList";
+import axios from "axios";
 
 const CreateBusSchedule = () => {
   const { busSchedule, setBusSchedule, schedules, setSchedules, setIsSuccSdl } =
@@ -13,6 +14,7 @@ const CreateBusSchedule = () => {
 
   const inputScheduleRef = useMemo(() => busSchedule, [busSchedule]);
   console.log(schedules);
+
   const handleChange = useCallback(
     (
       event:
@@ -27,7 +29,7 @@ const CreateBusSchedule = () => {
           });
         } else {
           const { value, name } = event.target;
-          setBusSchedule((prevState: SetBusScheduleType) => {
+          setBusSchedule((prevState) => {
             return {
               ...prevState,
               [name]: value,
@@ -39,16 +41,42 @@ const CreateBusSchedule = () => {
     [busSchedule]
   );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    axios
+      .post("http://localhost:3000/api/schedules", {
+        date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
+        time: busSchedule.dateAndTime?.format("HH:mm") as string,
+        coachType: inputScheduleRef.coachType,
+        coachNo: inputScheduleRef.coachNo,
+        startingCounter: inputScheduleRef.startingCounter,
+        endCounter: inputScheduleRef.endCounter,
+        registrationNumber: inputScheduleRef.registrationNumber,
+        coachClass: inputScheduleRef.coachClass,
+        fare: inputScheduleRef.fare,
+        livingFrom: inputScheduleRef.livingFrom,
+        goingTo: inputScheduleRef.goingTo,
+      })
+      .then((res) => console.log(res))
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
+      });
 
     const schedule = {
       ...busSchedule,
       date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
       time: busSchedule.dateAndTime?.format("HH:mm") as string,
     };
-
-    setSchedules([...schedules, schedule]);
 
     setBusSchedule({
       dateAndTime: dayjs().add(1, "day"),
@@ -61,9 +89,6 @@ const CreateBusSchedule = () => {
       registrationNumber: "",
       coachClass: "",
       fare: 0,
-      sold: 0,
-      booked: 0,
-      avaiable: 40,
       livingFrom: "",
       goingTo: "",
     });

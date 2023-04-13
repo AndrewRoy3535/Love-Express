@@ -9,8 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { CreateUserTypes } from "../types/types";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import { Users } from "../types/types";
 
 const useStyles = makeStyles({
   table: {
@@ -39,9 +40,25 @@ function ModalUserList() {
 
   const classes = useStyles();
 
-  const handleDelete = (index: number) => {
-    setUsers(users.filter((row: CreateUserTypes, i: number) => i !== index));
+  const handleDelete = async (row: {
+    _id: string;
+    name: string;
+    admin: boolean;
+  }): Promise<void> => {
+    const { _id } = row;
+    try {
+      const response = await axios.delete("http://localhost:3000/api/users", {
+        data: { id: _id },
+      });
+      console.log(response.data);
+      setUsers((prevUsers: Users[]) =>
+        prevUsers.filter((user: Users) => user._id !== _id)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <div>
       <Modal
@@ -59,9 +76,6 @@ function ModalUserList() {
                 <TableRow>
                   <TableCell className={classes.cell}>Name</TableCell>
                   <TableCell align='right' className={classes.cell}>
-                    Password
-                  </TableCell>
-                  <TableCell align='right' className={classes.cell}>
                     Admin
                   </TableCell>
                   <TableCell align='right' className={classes.cell}>
@@ -70,21 +84,25 @@ function ModalUserList() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.map((row: CreateUserTypes, index: number) => (
+                {users.map((row, index: number) => (
                   <TableRow
-                    key={row.name}
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                     <TableCell component='th' scope='row'>
                       {row.name}
                     </TableCell>
-                    <TableCell align='right'>{row.password}</TableCell>
                     {row.admin === true ? (
                       <TableCell align='right'>Yes</TableCell>
                     ) : (
                       <TableCell align='right'>No</TableCell>
                     )}
                     <TableCell align='right'>
-                      <Button onClick={() => handleDelete(index)}>
+                      <Button
+                        onClick={() =>
+                          handleDelete(
+                            row as { _id: string; name: string; admin: boolean }
+                          )
+                        }>
                         <DeleteIcon />
                       </Button>
                     </TableCell>
@@ -93,17 +111,6 @@ function ModalUserList() {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button
-            type='button'
-            variant='contained'
-            style={{
-              marginTop: 10,
-              borderRadius: "5px",
-              padding: 5,
-              color: "black",
-            }}>
-            Post
-          </Button>
         </Box>
       </Modal>
     </div>

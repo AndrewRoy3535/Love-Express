@@ -7,14 +7,13 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Button,
 } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { CreateBusProps } from "../types/interfaces";
 
 function FirstHalfForm(props: CreateBusProps) {
   const { handleChange, inputScheduleRef, handleDateChange } = props;
-
-  console.log("firstHalfForm");
 
   return (
     <Box component='div' className='container_schedule_form'>

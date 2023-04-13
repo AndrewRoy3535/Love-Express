@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 
 export type CreateUserTypes = {
-  name: string;
+  _id?: string;
+  name?: string;
   password?: string;
   confirmpassword?: string;
   admin?: boolean;
@@ -18,9 +19,12 @@ export type CreateBusType = {
   registrationNumber: string;
   coachClass: string;
   fare: number | null;
-  sold: number;
-  booked: number;
-  available: number | 40;
   livingFrom: string;
   goingTo: string;
+};
+
+export type Users = {
+  _id: string;
+  name: string;
+  admin: boolean;
 };
