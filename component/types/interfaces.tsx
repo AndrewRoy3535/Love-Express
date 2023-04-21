@@ -24,7 +24,7 @@ export interface SetBusScheduleType {
   busSchedule: CreateBusType;
   setBusSchedule: React.Dispatch<React.SetStateAction<CreateBusType>>;
   schedules: CreateBusType[];
-  setSchedules: (schedules: CreateBusType[]) => void;
+  setSchedules: React.Dispatch<React.SetStateAction<CreateBusType[]>>;
   showSchedules: boolean;
   setShowSchedules: (modal: boolean) => void;
   handleOpenSchedules: () => void;

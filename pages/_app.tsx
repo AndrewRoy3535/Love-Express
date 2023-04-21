@@ -7,6 +7,7 @@ import "../styles/busScheduleForm.css";
 import "../styles/createUserForm.css";
 import "../styles/formHeader.css";
 import "../styles/searchForm.css";
+import "../styles/searchResults.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

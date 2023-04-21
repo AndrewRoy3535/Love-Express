@@ -16,7 +16,6 @@ const Appbar: React.FC<AppBarProps> = () => {
   const toggleDrawer = () => {
     setToggle(!toggle);
   };
-  console.log("Appbar");
 
   return (
     <>

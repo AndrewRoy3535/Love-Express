@@ -13,7 +13,6 @@ const CreateBusSchedule = () => {
     useContext<SetBusScheduleType>(ScheduleContext);
 
   const inputScheduleRef = useMemo(() => busSchedule, [busSchedule]);
-  console.log(schedules);
 
   const handleChange = useCallback(
     (
@@ -49,6 +48,7 @@ const CreateBusSchedule = () => {
         date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
         time: busSchedule.dateAndTime?.format("HH:mm") as string,
         coachType: inputScheduleRef.coachType,
+        coachCategory: inputScheduleRef.coachCategory,
         coachNo: inputScheduleRef.coachNo,
         startingCounter: inputScheduleRef.startingCounter,
         endCounter: inputScheduleRef.endCounter,
@@ -83,6 +83,7 @@ const CreateBusSchedule = () => {
       date: "",
       time: "",
       coachType: "",
+      coachCategory: "",
       coachNo: "",
       startingCounter: "",
       endCounter: "",

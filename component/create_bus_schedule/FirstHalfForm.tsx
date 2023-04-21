@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import {
   Box,
   FormLabel,
@@ -7,7 +7,6 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Button,
 } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { CreateBusProps } from "../types/interfaces";
@@ -50,8 +49,30 @@ function FirstHalfForm(props: CreateBusProps) {
           name='coachType'
           value={inputScheduleRef.coachType}
           onChange={handleChange}>
-          <MenuItem value='Ac'>Ac</MenuItem>
+          <MenuItem value='Sleeper'>Ac</MenuItem>
           <MenuItem value='None-Ac'>None-Ac</MenuItem>
+        </Select>
+      </FormControl>
+      <FormLabel
+        id='demo-radio-buttons-group-label-some'
+        sx={{ margin: "10px !important" }}>
+        Select Coach Category
+      </FormLabel>
+      <FormControl sx={{ width: "100%" }}>
+        <InputLabel id='coachCategory' size='small'>
+          Coach Category
+        </InputLabel>
+        <Select
+          size='small'
+          labelId='coachCategory'
+          fullWidth
+          id='select'
+          label='Coach Category'
+          name='coachCategory'
+          value={inputScheduleRef.coachCategory}
+          onChange={handleChange}>
+          <MenuItem value='Sleeper'>Sleeper</MenuItem>
+          <MenuItem value='None-Sleeper'>None-Sleeper</MenuItem>
         </Select>
       </FormControl>
       <FormLabel

@@ -61,8 +61,6 @@ const CreateUser = () => {
     setUser({ ...user, admin: event.target.value === "true" });
   };
 
-  console.log("CreateUeser");
-
   return (
     <Box component='form' className='container_user' onSubmit={handleSubmit}>
       <FormLabel

@@ -5,6 +5,7 @@ interface Schedule extends Document {
   date: string;
   time: string;
   coachType: string;
+  coachCategory: string;
   coachNo: string;
   startingCounter: string;
   endCounter: string;
@@ -29,6 +30,10 @@ const ScheduleScheam = new Schema<Schedule>(
       required: true,
     },
     coachType: {
+      type: String,
+      required: true,
+    },
+    coachCategory: {
       type: String,
       required: true,
     },

@@ -6,26 +6,27 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { BusScheduleProvider } from "../../context/ScheduleContext";
 import { UserProvider } from "../../context/UserContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { lightBlue } from "@material-ui/core/colors";
+import { BookingProvider } from "../../context/BookingContext";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
-      // primary: lightBlue,
     },
   });
   return (
-    <UserProvider>
-      <BusScheduleProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <ThemeProvider theme={darkTheme}>
-            <Appbar />
-            {children}
-          </ThemeProvider>
-        </LocalizationProvider>
-      </BusScheduleProvider>
-    </UserProvider>
+    <BookingProvider>
+      <UserProvider>
+        <BusScheduleProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ThemeProvider theme={darkTheme}>
+              <Appbar />
+              {children}
+            </ThemeProvider>
+          </LocalizationProvider>
+        </BusScheduleProvider>
+      </UserProvider>
+    </BookingProvider>
   );
 };
 

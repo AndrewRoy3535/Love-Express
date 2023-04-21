@@ -1,7 +1,8 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { CreateBusType } from "../component/types/types";
 import { SetBusScheduleType } from "../component/types/interfaces";
+import axios from "axios";
 
 const ScheduleContext = createContext<SetBusScheduleType>({
   busSchedule: {
@@ -9,6 +10,7 @@ const ScheduleContext = createContext<SetBusScheduleType>({
     date: "",
     time: "",
     coachType: "",
+    coachCategory: "",
     coachNo: "",
     startingCounter: "",
     endCounter: "",
@@ -25,6 +27,7 @@ const ScheduleContext = createContext<SetBusScheduleType>({
       date: "",
       time: "",
       coachType: "",
+      coachCategory: "",
       coachNo: "",
       startingCounter: "",
       endCounter: "",
@@ -54,6 +57,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = ({
     date: "",
     time: "",
     coachType: "",
+    coachCategory: "",
     coachNo: "",
     startingCounter: "",
     endCounter: "",
@@ -71,6 +75,19 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = ({
   const handleCloseSchedules = () => {
     setShowSchedules(false);
   };
+  const uri: string = "http://localhost:3000/api/schedules";
+
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get(uri)
+        .then((res) => {
+          setSchedules(res.data);
+        })
+        .catch((e) => console.log(e));
+    }
+    fetchData();
+  }, []);
 
   return (
     <ScheduleContext.Provider

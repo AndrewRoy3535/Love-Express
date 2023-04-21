@@ -28,6 +28,7 @@ export default async function scheduleHandler(
           date,
           time,
           coachType,
+          coachCategory,
           coachNo,
           startingCounter,
           endCounter,
@@ -41,6 +42,7 @@ export default async function scheduleHandler(
           !date ||
           !time ||
           !coachType ||
+          !coachCategory ||
           !coachNo ||
           !startingCounter ||
           !endCounter ||
@@ -57,6 +59,7 @@ export default async function scheduleHandler(
           date,
           time,
           coachType,
+          coachCategory,
           coachNo,
           startingCounter,
           endCounter,
@@ -89,6 +92,7 @@ export default async function scheduleHandler(
           date,
           time,
           coachType,
+          coachCategory,
           coachNo,
           startingCounter,
           endCounter,
@@ -104,6 +108,7 @@ export default async function scheduleHandler(
           (!date &&
             !time &&
             !coachType &&
+            !coachCategory &&
             !coachNo &&
             !startingCounter &&
             !endCounter &&
@@ -127,6 +132,7 @@ export default async function scheduleHandler(
         schedule.date = date;
         schedule.time = time;
         schedule.coachType = coachType;
+        schedule.coachCategory = coachCategory;
         schedule.coachNo = coachNo;
         schedule.startingCounter = startingCounter;
         schedule.endCounter = endCounter;

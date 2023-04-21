@@ -44,8 +44,6 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
     fetchData();
   }, []);
 
-  console.log(users);
-
   return (
     <UserContext.Provider
       value={{

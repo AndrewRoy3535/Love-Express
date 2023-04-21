@@ -77,6 +77,9 @@ const ModalScheduleList = () => {
                     Coach type
                   </TableCell>
                   <TableCell className={classes.cell} align='right'>
+                    Coach Category
+                  </TableCell>
+                  <TableCell className={classes.cell} align='right'>
                     Coach class
                   </TableCell>
                   <TableCell className={classes.cell} align='right'>
@@ -104,6 +107,7 @@ const ModalScheduleList = () => {
                     <TableCell align='right'>{row.endCounter}</TableCell>
                     <TableCell align='right'>{row.fare}</TableCell>
                     <TableCell align='right'>{row.coachType}</TableCell>
+                    <TableCell align='right'>{row.coachCategory}</TableCell>
                     <TableCell align='right'>{row.coachClass}</TableCell>
                     <TableCell align='right'>
                       {row.registrationNumber}
@@ -120,17 +124,6 @@ const ModalScheduleList = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button
-            type='button'
-            variant='contained'
-            style={{
-              marginTop: 10,
-              borderRadius: "5px",
-              padding: 5,
-              color: "black",
-            }}>
-            Post
-          </Button>
         </Box>
       </Modal>
     </div>

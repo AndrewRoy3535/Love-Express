@@ -28,6 +28,5 @@ function utility() {
     </>
   );
 }
-console.log("Utility");
 
 export default utility;
