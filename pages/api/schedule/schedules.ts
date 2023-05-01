@@ -1,12 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Schedules from "../../model/Schedule";
-import connection from "../../utils/connection";
+import Schedules from "../../../model/Schedule";
+import connection from "../../../utils/connection";
 
 export default async function scheduleHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { method } = req;
+
+  console.log(method);
 
   await connection();
 

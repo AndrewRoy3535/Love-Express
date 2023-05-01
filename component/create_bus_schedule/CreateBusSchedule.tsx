@@ -44,7 +44,7 @@ const CreateBusSchedule = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/schedules", {
+      .post("http://localhost:3000/api/schedule/schedules", {
         date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
         time: busSchedule.dateAndTime?.format("HH:mm") as string,
         coachType: inputScheduleRef.coachType,
@@ -71,12 +71,6 @@ const CreateBusSchedule = () => {
         }
         console.log(error.config);
       });
-
-    const schedule = {
-      ...busSchedule,
-      date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
-      time: busSchedule.dateAndTime?.format("HH:mm") as string,
-    };
 
     setBusSchedule({
       dateAndTime: dayjs().add(1, "day"),

@@ -10,6 +10,7 @@ export type CreateUserTypes = {
 };
 
 export type CreateBusType = {
+  _id?: string;
   dateAndTime: dayjs.Dayjs | null;
   date: string;
   time: string;
@@ -23,12 +24,6 @@ export type CreateBusType = {
   fare: number | null;
   livingFrom: string;
   goingTo: string;
-};
-
-export type Users = {
-  _id: string;
-  name: string;
-  admin: boolean;
 };
 
 export type PassengerType = {

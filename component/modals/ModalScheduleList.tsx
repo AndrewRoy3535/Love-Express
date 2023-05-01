@@ -10,7 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { CreateBusType } from "../types/types";
+import axios from "axios";
 
 const style = {
   position: "absolute" as "absolute",
@@ -39,10 +39,20 @@ const ModalScheduleList = () => {
 
   const classes = useStyles();
 
-  const handleDelete = (index: number) => {
-    setSchedules(
-      schedules.filter((row: CreateBusType, i: number) => i !== index)
-    );
+  const handleDelete = async (row: { _id: string }): Promise<void> => {
+    const { _id } = row;
+    try {
+      const response = await axios.delete(
+        "http://localhost:3000/api/schedule/schedules",
+        {
+          data: { id: _id },
+        }
+      );
+      console.log(response.data);
+      setSchedules(schedules.filter((row) => row._id !== _id));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -97,8 +107,8 @@ const ModalScheduleList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {schedules.map((row: CreateBusType, index: number) => (
-                  <TableRow key={index}>
+                {schedules.map((row) => (
+                  <TableRow key={row._id}>
                     <TableCell component='th' scope='row'>
                       {row.date}
                     </TableCell>
@@ -115,7 +125,8 @@ const ModalScheduleList = () => {
                     <TableCell align='right'>{row.livingFrom}</TableCell>
                     <TableCell align='right'>{row.goingTo}</TableCell>
                     <TableCell align='right'>
-                      <Button onClick={() => handleDelete(index)}>
+                      <Button
+                        onClick={() => handleDelete(row as { _id: string })}>
                         <DeleteIcon />
                       </Button>
                     </TableCell>

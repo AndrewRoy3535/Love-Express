@@ -49,9 +49,10 @@ const ScheduleContext = createContext<SetBusScheduleType>({
 
 export default ScheduleContext;
 
-export const BusScheduleProvider: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => {
+export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
+  { children },
+  props
+) => {
   const [busSchedule, setBusSchedule] = useState<CreateBusType>({
     dateAndTime: dayjs().add(1, "day"),
     date: "",
@@ -75,7 +76,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = ({
   const handleCloseSchedules = () => {
     setShowSchedules(false);
   };
-  const uri: string = "http://localhost:3000/api/schedules";
+  const uri: string = "http://localhost:3000/api/schedule/schedules";
 
   useEffect(() => {
     async function fetchData() {

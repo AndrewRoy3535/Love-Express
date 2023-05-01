@@ -11,7 +11,6 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { Users } from "../types/types";
 
 const useStyles = makeStyles({
   table: {
@@ -40,20 +39,14 @@ function ModalUserList() {
 
   const classes = useStyles();
 
-  const handleDelete = async (row: {
-    _id: string;
-    name: string;
-    admin: boolean;
-  }): Promise<void> => {
+  const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
       const response = await axios.delete("http://localhost:3000/api/users", {
         data: { id: _id },
       });
       console.log(response.data);
-      setUsers((prevUsers: Users[]) =>
-        prevUsers.filter((user: Users) => user._id !== _id)
-      );
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== _id));
     } catch (error) {
       console.error(error);
     }
@@ -98,11 +91,7 @@ function ModalUserList() {
                     )}
                     <TableCell align='right'>
                       <Button
-                        onClick={() =>
-                          handleDelete(
-                            row as { _id: string; name: string; admin: boolean }
-                          )
-                        }>
+                        onClick={() => handleDelete(row as { _id: string })}>
                         <DeleteIcon />
                       </Button>
                     </TableCell>

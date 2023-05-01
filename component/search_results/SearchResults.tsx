@@ -30,8 +30,6 @@ function SearchResults() {
     }
   };
 
-  console.log(passenger);
-
   return (
     <Box className='seat_container_head'>
       <Box>
