@@ -31,6 +31,8 @@ export interface SetBusScheduleType {
   handleCloseSchedules: () => void;
   isSuccSdl: boolean;
   setIsSuccSdl: (isSuccSdl: boolean) => void;
+  searchedBusData: [CreateBusType];
+  setSearchedBusData: React.Dispatch<React.SetStateAction<[CreateBusType]>>;
 }
 
 export interface CreateBusContextTypes {

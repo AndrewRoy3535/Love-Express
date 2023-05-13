@@ -8,6 +8,7 @@ import ScheduleContext from "../../context/ScheduleContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
+import Link from "next/link";
 
 type SearchBusTypes = {
   livingFrom: string;
@@ -16,7 +17,8 @@ type SearchBusTypes = {
 };
 
 function SearchBus() {
-  const { schedules } = React.useContext(ScheduleContext);
+  const { searchedBusData, setSearchedBusData } =
+    React.useContext(ScheduleContext);
   const [searchBus, setSearchBus] = React.useState<SearchBusTypes>({
     livingFrom: "",
     goingTo: "",
@@ -32,7 +34,6 @@ function SearchBus() {
   };
 
   const uri: string = "http://localhost:3000/api/schedule/findSchedules";
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { livingFrom, goingTo, date } = searchBus;
@@ -42,15 +43,14 @@ function SearchBus() {
         goingTo,
         date,
       })
-      .then((res) => console.log(res.data))
+      .then((res) => setSearchedBusData(res.data))
       .catch((err) => console.log(err));
   };
-
   const setDate = (value: Dayjs) => {
     setValue(value);
     setSearchBus({ ...searchBus, date: value?.format("DD-MM-YYYY") as string });
   };
-
+  console.log(searchedBusData);
   return (
     <Box
       component='form'

@@ -45,3 +45,15 @@ export type BookingContextType = {
   passenger: PassengerType;
   setPassenger: React.Dispatch<React.SetStateAction<PassengerType>>;
 };
+
+export type SearchedDataType = {
+  data: [CreateBusType];
+};
+
+export type Users = {
+  _id?: string;
+  name?: string;
+  password?: string;
+  confirmpassword?: string;
+  admin?: boolean;
+};

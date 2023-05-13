@@ -45,6 +45,24 @@ const ScheduleContext = createContext<SetBusScheduleType>({
   handleCloseSchedules: () => {},
   isSuccSdl: false,
   setIsSuccSdl: () => {},
+  searchedBusData: [
+    {
+      dateAndTime: dayjs().add(1, "day"),
+      date: "",
+      time: "",
+      coachType: "",
+      coachCategory: "",
+      coachNo: "",
+      startingCounter: "",
+      endCounter: "",
+      registrationNumber: "",
+      coachClass: "",
+      fare: 0,
+      livingFrom: "",
+      goingTo: "",
+    },
+  ],
+  setSearchedBusData: () => {},
 });
 
 export default ScheduleContext;
@@ -72,6 +90,24 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
   const [schedules, setSchedules] = useState<CreateBusType[]>([]);
   const [showSchedules, setShowSchedules] = useState<boolean>(false);
   const [isSuccSdl, setIsSuccSdl] = useState<boolean>(false);
+  const [searchedBusData, setSearchedBusData] = useState<[CreateBusType]>([
+    {
+      dateAndTime: dayjs().add(1, "day"),
+      date: "",
+      time: "",
+      coachType: "",
+      coachCategory: "",
+      coachNo: "",
+      startingCounter: "",
+      endCounter: "",
+      registrationNumber: "",
+      coachClass: "",
+      fare: 0,
+      livingFrom: "",
+      goingTo: "",
+    },
+  ]);
+
   const handleOpenSchedules = () => setShowSchedules(true);
   const handleCloseSchedules = () => {
     setShowSchedules(false);
@@ -103,6 +139,8 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
         handleCloseSchedules,
         isSuccSdl,
         setIsSuccSdl,
+        searchedBusData,
+        setSearchedBusData,
       }}>
       {children}
     </ScheduleContext.Provider>

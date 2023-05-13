@@ -9,7 +9,7 @@ import ModalScheduleList from "../modals/ModalScheduleList";
 import axios from "axios";
 
 const CreateBusSchedule = () => {
-  const { busSchedule, setBusSchedule, schedules, setSchedules, setIsSuccSdl } =
+  const { busSchedule, setBusSchedule, setIsSuccSdl } =
     useContext<SetBusScheduleType>(ScheduleContext);
 
   const inputScheduleRef = useMemo(() => busSchedule, [busSchedule]);
