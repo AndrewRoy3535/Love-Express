@@ -24,6 +24,7 @@ export type CreateBusType = {
   fare: number | null;
   livingFrom: string;
   goingTo: string;
+  passengersId?: Types.ObjectId[];
 };
 
 export type PassengerType = {
@@ -44,6 +45,8 @@ export type PassengerType = {
 export type BookingContextType = {
   passenger: PassengerType;
   setPassenger: React.Dispatch<React.SetStateAction<PassengerType>>;
+  scheduleId?: string;
+  totalPrice?: number;
 };
 
 export type SearchedDataType = {
@@ -56,4 +59,10 @@ export type Users = {
   password?: string;
   confirmpassword?: string;
   admin?: boolean;
+};
+
+export type SearchBusTypes = {
+  livingFrom: string;
+  goingTo: string;
+  date: string | null;
 };

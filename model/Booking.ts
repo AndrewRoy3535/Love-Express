@@ -1,5 +1,4 @@
 import { Document, Schema, model, models, Types } from "mongoose";
-import Schedules from "./Schedule";
 
 interface Booking extends Document {
   scheduleId: Types.ObjectId;
@@ -20,8 +19,7 @@ const BookingSchema = new Schema<Booking>(
   {
     scheduleId: {
       type: Schema.Types.ObjectId,
-      required: true,
-      ref: Schedules,
+      ref: "Schedules",
     },
     passengername: {
       type: String,

@@ -1,30 +1,67 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CreateBusSchedule from "../component/create_bus_schedule/CreateBusSchedule";
 import CreateUser from "../component/create_user/CreateUser";
 import FormHeader from "../component/form_header/FormHeader";
 import ScheduleContext from "../context/ScheduleContext";
 import UserContext from "../context/UserContext";
+import AddDestinations from "../component/add_destinations/AddDestinations";
+import axios from "axios";
+
+// should move the add destination button from AddDestination component to here inculding all the fetch funtions then pass it down to the child component...
+
+type Props = {
+  destination: Array<{ place: string; _id: string }>;
+};
 
 function utility() {
   const { schedules } = useContext(ScheduleContext);
   const { users } = useContext(UserContext);
+  const [changevalue, setChangevalue] = useState("");
+  const [destination, setDestination] = useState<
+    [{ place: string; _id: string }]
+  >([{ place: "place", _id: "_id" }]);
   const scheduleCounts = schedules.length;
   const userCount = users.length;
+
+  const addDes = async () => {
+    await axios.post("api/destinations", {
+      place: changevalue,
+    });
+    setChangevalue("");
+    fetchDes();
+  };
+  const fetchDes = async () => {
+    const res = await axios.get("api/destinations");
+    const data = res.data;
+    setDestination(data);
+    setChangevalue("");
+  };
 
   return (
     <>
       <FormHeader
-        title='Create user'
+        title='Create User'
         description='Fill out this form bellow to create new user'
         count={userCount}
       />
       <CreateUser />
       <FormHeader
-        title='Create schedule'
+        title='Create Schedule'
         description='Fill out this form bellow to create new bus schedule'
         count={scheduleCounts}
       />
-      <CreateBusSchedule />
+      <CreateBusSchedule destinations={destination} />
+      <FormHeader
+        title='Add Destinations'
+        description='Add Destinations for Living from and Going to'
+      />
+      <AddDestinations
+        addDes={addDes}
+        fetchDes={fetchDes}
+        changevalue={changevalue}
+        setChangevalue={setChangevalue}
+        destination={destination}
+      />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Schedules from "../../../model/Schedule";
+import Booking from "../../../model/Booking";
 import type { NextApiRequest, NextApiResponse } from "next";
 import connection from "../../../utils/connection";
 
@@ -15,7 +16,9 @@ const findByCategory = async (req: NextApiRequest, res: NextApiResponse) => {
           livingFrom,
           goingTo,
           date,
-        }).lean();
+        })
+          .populate("passengersId")
+          .lean();
 
         res.status(200).json(schedule);
       } catch (error) {

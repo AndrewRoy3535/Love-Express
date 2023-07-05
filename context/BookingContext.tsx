@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { PassengerType, BookingContextType } from "../component/types/types";
+import axios from "axios";
 
 const BookingContext = createContext<BookingContextType>({
   passenger: {
@@ -38,6 +39,17 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
     seats: [],
     cancel: false,
   });
+
+  async function fetchBooking() {
+    await axios
+      .get("api/bookings")
+      .then((res) => setPassenger(res.data))
+      .catch((error) => console.log(error));
+  }
+
+  useEffect(() => {
+    fetchBooking();
+  }, []);
 
   return (
     <BookingContext.Provider value={{ passenger, setPassenger }}>

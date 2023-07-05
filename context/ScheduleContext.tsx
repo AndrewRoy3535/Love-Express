@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { CreateBusType } from "../component/types/types";
+import { CreateBusType, SearchBusTypes } from "../component/types/types";
 import { SetBusScheduleType } from "../component/types/interfaces";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const ScheduleContext = createContext<SetBusScheduleType>({
   busSchedule: {
@@ -63,6 +64,13 @@ const ScheduleContext = createContext<SetBusScheduleType>({
     },
   ],
   setSearchedBusData: () => {},
+  handleSubmitsb: async () => {},
+  searchBus: {
+    livingFrom: "",
+    goingTo: "",
+    date: "",
+  },
+  setSearchBus: () => {},
 });
 
 export default ScheduleContext;
@@ -107,6 +115,11 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
       goingTo: "",
     },
   ]);
+  const [searchBus, setSearchBus] = React.useState<SearchBusTypes>({
+    livingFrom: "",
+    goingTo: "",
+    date: "",
+  });
 
   const handleOpenSchedules = () => setShowSchedules(true);
   const handleCloseSchedules = () => {
@@ -126,6 +139,23 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
     fetchData();
   }, []);
 
+  const router = useRouter();
+  const urifindSche: string = "/api/schedule/findSchedules";
+  const handleSubmitsb = async () => {
+    const { livingFrom, goingTo, date } = searchBus;
+    axios
+      .post(urifindSche, {
+        livingFrom,
+        goingTo,
+        date,
+      })
+      .then((res) => {
+        setSearchedBusData(res.data);
+        router.push("/searches");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ScheduleContext.Provider
       value={{
@@ -141,6 +171,9 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
         setIsSuccSdl,
         searchedBusData,
         setSearchedBusData,
+        handleSubmitsb,
+        searchBus,
+        setSearchBus,
       }}>
       {children}
     </ScheduleContext.Provider>

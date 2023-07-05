@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Box, TextField, Button } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,7 +8,7 @@ import ScheduleContext from "../../context/ScheduleContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 type SearchBusTypes = {
   livingFrom: string;
@@ -16,14 +16,14 @@ type SearchBusTypes = {
   date: string | null;
 };
 
-function SearchBus() {
-  const { searchedBusData, setSearchedBusData } =
+type Props = {
+  destinations: Array<{ place: string; _id: string }>;
+};
+
+function SearchBus({ destinations }: Props) {
+  const { handleSubmitsb, searchBus, setSearchBus } =
     React.useContext(ScheduleContext);
-  const [searchBus, setSearchBus] = React.useState<SearchBusTypes>({
-    livingFrom: "",
-    goingTo: "",
-    date: "",
-  });
+
   const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(0, "day"));
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -33,29 +33,13 @@ function SearchBus() {
     });
   };
 
-  const uri: string = "http://localhost:3000/api/schedule/findSchedules";
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { livingFrom, goingTo, date } = searchBus;
-    axios
-      .post(uri, {
-        livingFrom,
-        goingTo,
-        date,
-      })
-      .then((res) => setSearchedBusData(res.data))
-      .catch((err) => console.log(err));
-  };
   const setDate = (value: Dayjs) => {
     setValue(value);
     setSearchBus({ ...searchBus, date: value?.format("DD-MM-YYYY") as string });
   };
-  console.log(searchedBusData);
+
   return (
-    <Box
-      component='form'
-      className='search_form_container'
-      onSubmit={handleSubmit}>
+    <Box component='form' className='search_form_container'>
       <FormControl>
         <InputLabel id='demo-simple-select-label' size='small'>
           Living From
@@ -69,8 +53,13 @@ function SearchBus() {
           value={searchBus.livingFrom}
           label='Living from'
           onChange={handleChange}>
-          <MenuItem value='Dhaka'>Dhaka</MenuItem>
-          <MenuItem value='Chittagong'>Chittagong</MenuItem>
+          {destinations.map((el, i) => {
+            return (
+              <MenuItem key={el._id} value={el.place}>
+                {el.place}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <FormControl>
@@ -86,8 +75,13 @@ function SearchBus() {
           value={searchBus.goingTo}
           label='Living from'
           onChange={handleChange}>
-          <MenuItem value='Dhaka'>Dhaka</MenuItem>
-          <MenuItem value='Chittagong'>Chittagong</MenuItem>
+          {destinations.map((el, i) => {
+            return (
+              <MenuItem key={el._id} value={el.place}>
+                {el.place}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <DatePicker
@@ -98,7 +92,10 @@ function SearchBus() {
         onChange={(newValue) => setDate(newValue as Dayjs)}
         renderInput={(params) => <TextField {...params} />}
       />
-      <Button variant='outlined' type='submit' className='search_form_btn'>
+      <Button
+        variant='outlined'
+        className='search_form_btn'
+        onClick={handleSubmitsb}>
         Search
       </Button>
     </Box>

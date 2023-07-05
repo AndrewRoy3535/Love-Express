@@ -1,6 +1,6 @@
 import React from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { CreateBusType, CreateUserTypes, Users } from "./types";
+import { CreateBusType, CreateUserTypes, Users, SearchBusTypes } from "./types";
 
 export interface LayoutProps {
   children: React.ReactNode;
@@ -18,6 +18,7 @@ export interface CreateBusProps {
   ) => void;
   inputScheduleRef: CreateBusType;
   handleDateChange?: any;
+  destinations?: Array<{ place: string; _id: string }>;
 }
 
 export interface SetBusScheduleType {
@@ -33,6 +34,9 @@ export interface SetBusScheduleType {
   setIsSuccSdl: (isSuccSdl: boolean) => void;
   searchedBusData: [CreateBusType];
   setSearchedBusData: React.Dispatch<React.SetStateAction<[CreateBusType]>>;
+  handleSubmitsb: () => Promise<void>;
+  searchBus: SearchBusTypes;
+  setSearchBus: React.Dispatch<React.SetStateAction<SearchBusTypes>>;
 }
 
 export interface CreateBusContextTypes {

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import BookingContext from "../../context/BookingContext";
+import React from "react";
 import {
   Box,
   FormLabel,
@@ -9,11 +8,18 @@ import {
   FormControl,
   InputLabel,
   SelectChangeEvent,
+  Button,
 } from "@mui/material";
+import { BookingContextType } from "../types/types";
+import axios from "axios";
+import ScheduleContext from "../../context/ScheduleContext";
 
-function CustomerForm() {
-  const { passenger, setPassenger } = useContext(BookingContext);
-
+function CustomerForm({
+  passenger,
+  setPassenger,
+  scheduleId,
+  totalPrice,
+}: BookingContextType) {
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,9 +34,66 @@ function CustomerForm() {
       };
     });
   };
+  const { handleSubmitsb } = React.useContext(ScheduleContext);
+  const customerFromSubmit = async (e: React.FocusEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await axios
+        .post("api/bookings", {
+          scheduleId,
+          passengername: passenger.passengername,
+          gender: passenger.gender,
+          address: passenger.address,
+          boardngpoint: passenger.boardngpoint,
+          dropingpoint: passenger.dropingpoint,
+          totalamonut: totalPrice,
+          mobile: passenger.mobile,
+          email: passenger.email,
+          age: passenger.age,
+          seats: passenger.seats,
+          cancel: passenger.cancel,
+        })
+        .then((res) => {
+          const { scheduleId } = res.data;
+          const idd = res.data.id;
+
+          axios.patch(`api/schedule/${scheduleId}`, {
+            id: scheduleId,
+            passengersId: idd,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setPassenger({
+      scheduleId: "",
+      passengername: "",
+      gender: "",
+      address: "",
+      boardngpoint: "",
+      dropingpoint: "",
+      totalamonut: 0,
+      mobile: "",
+      email: "",
+      age: 0,
+      seats: [],
+      cancel: false,
+    });
+    setTimeout(() => {
+      // location.reload();
+      handleSubmitsb();
+    }, 1000);
+  };
 
   return (
-    <Box component='div' className='container_schedule_form'>
+    <Box
+      component='form'
+      className='container_schedule_form'
+      onSubmit={customerFromSubmit}>
       <FormLabel
         id='demo-radio-buttons-group-label'
         sx={{ marginTop: "10px !important" }}>
@@ -49,7 +112,7 @@ function CustomerForm() {
       />
       <FormControl sx={{ width: "100%", marginTop: "15px" }}>
         <InputLabel id='CoachType' size='small'>
-          Coach Type
+          Gender
         </InputLabel>
         <Select
           size='small'
@@ -161,6 +224,7 @@ function CustomerForm() {
         value={passenger.age}
         onChange={handleChange}
       />
+      <Button type='submit'>Submit</Button>
     </Box>
   );
 }

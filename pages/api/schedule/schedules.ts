@@ -15,7 +15,8 @@ export default async function scheduleHandler(
   switch (method) {
     case "GET":
       try {
-        const schedules = await Schedules.find().lean();
+        const schedules = await Schedules.find()
+        .lean();
         if (!schedules?.length) {
           return res.status(400).json({ message: "No schedule found!" });
         }
@@ -39,6 +40,7 @@ export default async function scheduleHandler(
           fare,
           livingFrom,
           goingTo,
+          passengersId,
         } = req.body;
         if (
           !date ||
@@ -70,6 +72,7 @@ export default async function scheduleHandler(
           fare,
           livingFrom,
           goingTo,
+          passengersId,
         };
 
         const newSchedule = await Schedules.create(scheduleObj);
@@ -103,6 +106,7 @@ export default async function scheduleHandler(
           fare,
           livingFrom,
           goingTo,
+          passengersId,
         } = req.body;
 
         if (
@@ -118,7 +122,8 @@ export default async function scheduleHandler(
             !coachClass &&
             !fare &&
             !livingFrom &&
-            !goingTo)
+            !goingTo &&
+            !passengersId)
         ) {
           return res
             .status(400)
@@ -143,7 +148,7 @@ export default async function scheduleHandler(
         schedule.fare = fare;
         schedule.livingFrom = livingFrom;
         schedule.goingTo = goingTo;
-
+        schedule.passengersId = passengersId;
         const updatedSchedule = await schedule.save();
 
         if (updatedSchedule) {

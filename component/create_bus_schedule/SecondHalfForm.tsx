@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import { CreateBusProps } from "../types/interfaces";
 import ScheduleContext from "../../context/ScheduleContext";
+import axios from "axios";
 
 function SecondHalfForm(props: CreateBusProps) {
-  const { inputScheduleRef, handleChange } = props;
-
+  const { inputScheduleRef, handleChange, destinations } = props;
   const { handleOpenSchedules, schedules, isSuccSdl } =
     useContext(ScheduleContext);
 
@@ -100,8 +100,13 @@ function SecondHalfForm(props: CreateBusProps) {
           value={inputScheduleRef.livingFrom}
           label='Living from'
           onChange={handleChange}>
-          <MenuItem value='Dhaka'>Dhaka</MenuItem>
-          <MenuItem value='Chittagong'>Chittagong</MenuItem>
+          {destinations?.map((el, i) => {
+            return (
+              <MenuItem key={el._id} value={el.place}>
+                {el.place}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <FormControl fullWidth sx={{ marginTop: "10px" }} required>
@@ -117,8 +122,13 @@ function SecondHalfForm(props: CreateBusProps) {
           value={inputScheduleRef.goingTo}
           label='Living from'
           onChange={handleChange}>
-          <MenuItem value='Dhaka'>Dhaka</MenuItem>
-          <MenuItem value='Chittagong'>Chittagong</MenuItem>
+          {destinations?.map((el, i) => {
+            return (
+              <MenuItem key={el._id} value={el.place}>
+                {el.place}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <Typography

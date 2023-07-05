@@ -1,22 +1,23 @@
-import React from "react";
-import type { InferGetStaticPropsType, GetStaticProps } from "next";
-import { Box } from "@mui/material";
+import React, { useContext } from "react";
+import SearchedData from "../component/searched_data/SearchedData";
+import ScheduleContext from "../context/ScheduleContext";
 import SearchBus from "../component/search_bus/SearchBus";
-import NavTabs from "../component/tabs/NavTab";
 import axios from "axios";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
-export default function Home({ destination }: Props) {
+function Searches({ destination }: Props) {
+  const { searchedBusData } = useContext(ScheduleContext);
   return (
-    <Box>
+    <>
       <SearchBus destinations={destination} />
-      <NavTabs />
-    </Box>
+      <SearchedData data={searchedBusData} />
+    </>
   );
 }
+
 export async function getStaticProps() {
   const response = await axios.get("http://localhost:3000/api/destinations");
   const data = await response.data;
@@ -24,3 +25,5 @@ export async function getStaticProps() {
     props: { destination: data },
   };
 }
+
+export default Searches;

@@ -8,7 +8,11 @@ import { SetBusScheduleType } from "../types/interfaces";
 import ModalScheduleList from "../modals/ModalScheduleList";
 import axios from "axios";
 
-const CreateBusSchedule = () => {
+type Props = {
+  destinations: Array<{ place: string; _id: string }>;
+};
+
+const CreateBusSchedule = ({ destinations }: Props) => {
   const { busSchedule, setBusSchedule, setIsSuccSdl } =
     useContext<SetBusScheduleType>(ScheduleContext);
 
@@ -116,6 +120,7 @@ const CreateBusSchedule = () => {
         <SecondHalfForm
           handleChange={handleChange}
           inputScheduleRef={inputScheduleRef}
+          destinations={destinations}
         />
       </Box>
       <ModalScheduleList />

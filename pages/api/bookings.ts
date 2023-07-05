@@ -13,7 +13,9 @@ export default async function userHandler(
   switch (method) {
     case "GET":
       try {
-        const bookings = await Booking.find().lean();
+        const bookings = await Booking.find()
+          .populate({ path: "scheduleId", model: "Schedules" })
+          .lean();
         if (!bookings?.length) {
           return res.status(400).json({ message: "No bookings found!" });
         }
@@ -25,15 +27,21 @@ export default async function userHandler(
     case "POST":
       try {
         const { scheduleId, mobile, seats } = req.body;
+
         if (!scheduleId || !mobile || !seats) {
           res.status(400).json({ message: "All fields are required!" });
         }
 
         const newbooking = await Booking.create(req.body);
+        const bookingId = newbooking._id;
+        await newbooking.save();
 
+        const id = bookingId;
         if (newbooking) {
           return res.status(200).json({
-            message: `A new booking with id: ${scheduleId} has been created`,
+            message: `A new booking created with id: ${id}`,
+            id,
+            scheduleId,
           });
         } else {
           return res

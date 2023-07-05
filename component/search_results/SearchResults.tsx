@@ -1,15 +1,36 @@
-import React, { useContext, useState } from "react";
-import BookingContext from "../../context/BookingContext";
-import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
 import CustomerForm from "../customer_form/CustomerForm";
+import { PassengerType } from "../types/types";
+import PassengerList from "./PassengerList";
 
-function SearchResults() {
-  const numb = Array.from(Array(10)).map((el, i) => i + 65);
+type Props = {
+  rowId?: string;
+  passengers: any;
+  price: number;
+};
+
+function SearchResults({ rowId, passengers, price }: Props) {
+  const numb = Array.from(Array(10)).map((_, i) => i + 65);
   const alphabets = numb.map((el, i) => String.fromCharCode(el));
+  const [passenger, setPassenger] = useState<PassengerType>({
+    scheduleId: "",
+    passengername: "",
+    gender: "",
+    address: "",
+    boardngpoint: "",
+    dropingpoint: "",
+    totalamonut: 0,
+    mobile: "",
+    email: "",
+    age: 0,
+    seats: [],
+    cancel: false,
+  });
 
-  const { passenger, setPassenger } = useContext(BookingContext);
   const { seats } = passenger;
-
+  const totalPrice = seats.length * price;
+  console.log(totalPrice);
   const selectSeats = (seat: string) => {
     const findSeat = seats.find((el) => seat === el);
     if (findSeat === undefined) {
@@ -30,32 +51,45 @@ function SearchResults() {
     }
   };
 
+  function compareSeats(seat: any) {
+    const isSeatTaken = passengers?.some((el: any) => el.seats.includes(seat));
+    return isSeatTaken;
+  }
+
   return (
     <Box className='seat_container_head'>
       <Box>
         {alphabets.map((al, ind) => {
           return (
             <Box className='seat_container' key={ind + al}>
-              {Array.from(Array(4)).map((el, i) => {
+              {Array.from(Array(4)).map((_, i) => {
                 const seat = `${al}${i + 1}`;
                 const isSeatSelected = seats.includes(seat);
                 const seatClass = isSeatSelected ? "selected" : "";
                 return (
-                  <div
+                  <Button
+                    variant='outlined'
+                    disabled={compareSeats(seat) ? true : false}
                     key={i}
                     onClick={() => selectSeats(seat)}
                     className={`seat_box_container ${
                       i === 1 ? "seat_box_container_space" : ""
-                    } ${seatClass}`}>
-                    <Typography>{seat}</Typography>
-                  </div>
+                    } ${seatClass} ${compareSeats(seat) ? "booked" : ""}`}>
+                    {seat}
+                  </Button>
                 );
               })}
             </Box>
           );
         })}
       </Box>
-      <CustomerForm />
+      <CustomerForm
+        passenger={passenger}
+        setPassenger={setPassenger}
+        scheduleId={rowId}
+        totalPrice={totalPrice}
+      />
+      <PassengerList passengers={passengers} />
     </Box>
   );
 }
