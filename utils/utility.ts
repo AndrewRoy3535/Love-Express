@@ -1,3 +1,5 @@
+import { signIn } from "next-auth/react";
+
 export function tConvert(time: any) {
   // Check correct time format and split into components
   time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [

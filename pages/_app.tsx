@@ -9,11 +9,25 @@ import "../styles/formHeader.css";
 import "../styles/searchForm.css";
 import "../styles/searchResults.css";
 import "../styles/salesList.css";
+import { SessionProvider } from "next-auth/react";
+import { Inter } from "next/font/google";
 
-export default function App({ Component, pageProps }: AppProps) {
+const inter = Inter({ subsets: ["latin"] });
+
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={session}>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
   );
 }

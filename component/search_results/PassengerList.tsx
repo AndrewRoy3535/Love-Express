@@ -10,9 +10,11 @@ import { Box, Button, Typography } from "@mui/material";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import ScheduleContext from "../../context/ScheduleContext";
+import { useSession } from "next-auth/react";
 
 export default function PassengerList({ passengers }: any) {
   const { handleSubmitsb } = React.useContext(ScheduleContext);
+  const { data: session } = useSession();
 
   const deletePass = (_id: string) => {
     axios
@@ -61,7 +63,10 @@ export default function PassengerList({ passengers }: any) {
                 <TableCell align='right'>{row.email}</TableCell>
                 <TableCell align='right'>{row.totalamonut}</TableCell>
                 <TableCell align='right'>
-                  <Button color='warning' onClick={() => deletePass(row._id)}>
+                  <Button
+                    disabled={!session?.user?.admin ? true : false}
+                    color='warning'
+                    onClick={() => deletePass(row._id)}>
                     <DeleteIcon />
                   </Button>
                 </TableCell>

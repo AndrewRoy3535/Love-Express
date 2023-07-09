@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import { Menu as MenuIcon } from "@material-ui/icons";
+import { MenuRounded } from "@material-ui/icons";
 import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 import Lists from "./Lists";
 import { AppBarProps } from "../types/interfaces";
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const Appbar: React.FC<AppBarProps> = () => {
   const [toggle, setToggle] = React.useState<boolean>(false);
   const toggleDrawer = () => {
     setToggle(!toggle);
+  };
+
+  const { data: session } = useSession();
+  console.log(session);
+
+  const handlesin = async () => {
+    await signIn();
+  };
+  const hadlesinout = async () => {
+    await signOut();
   };
 
   return (
@@ -23,18 +35,22 @@ const Appbar: React.FC<AppBarProps> = () => {
         <AppBar position='fixed'>
           <Toolbar>
             <IconButton
-              size='large'
-              edge='start'
+              size='small'
               color='inherit'
               aria-label='menu'
-              sx={{ mr: 2 }}
               onClick={toggleDrawer}>
-              <MenuIcon />
+              <MenuRounded fontSize='medium' />
             </IconButton>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              <Link href='/'>Dashboard</Link>
-            </Typography>
-            <Button color='inherit'>Logout</Button>
+            {session && (
+              <Typography
+                component='div'
+                sx={{ flexGrow: 1, fontSize: "28px" }}>
+                <Link href='/'>Hi, {session?.user?.name}</Link>
+              </Typography>
+            )}
+            <Button color='inherit' variant='outlined' onClick={hadlesinout}>
+              Sign Out
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>

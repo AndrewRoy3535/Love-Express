@@ -1,19 +1,42 @@
 import React from "react";
-import type { InferGetStaticPropsType, GetStaticProps } from "next";
 import { Box } from "@mui/material";
 import SearchBus from "../component/search_bus/SearchBus";
 import NavTabs from "../component/tabs/NavTab";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import Login from "./login";
+import CircularProgress from "@mui/material/CircularProgress";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
 export default function Home({ destination }: Props) {
+  const { status } = useSession();
+  const router = useRouter();
+  if (status === "loading") {
+    return (
+      <Box
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        height='100vh'>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box>
-      <SearchBus destinations={destination} />
-      <NavTabs />
+      {status === "unauthenticated" ? (
+        <Login />
+      ) : (
+        <>
+          <SearchBus destinations={destination} />
+          <NavTabs />
+        </>
+      )}
     </Box>
   );
 }
