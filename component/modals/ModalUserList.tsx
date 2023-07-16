@@ -42,7 +42,7 @@ function ModalUserList() {
   const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
-      await axios.delete("http://localhost:3000/api/users", {
+      await axios.delete("/api/users", {
         data: { id: _id },
       });
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== _id));

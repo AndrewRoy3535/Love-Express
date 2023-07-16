@@ -47,7 +47,7 @@ const ModalScheduleList = () => {
   const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
-      await axios.delete("http://localhost:3000/api/schedule/schedules", {
+      await axios.delete("/api/schedule/schedules", {
         data: { id: _id },
       });
 

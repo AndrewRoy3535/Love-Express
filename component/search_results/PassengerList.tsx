@@ -23,7 +23,7 @@ export default function PassengerList({ passengers }: any) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
+  const handleChangeRowsPerPage: any = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);

@@ -129,7 +129,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
   const handleCloseSchedules = () => {
     setShowSchedules(false);
   };
-  const uri: string = "http://localhost:3000/api/schedule/schedules";
+  const uri: string = "/api/schedule/schedules";
 
   async function fetchDataSchedule() {
     await axios

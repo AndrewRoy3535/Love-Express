@@ -31,7 +31,7 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
   const [showUser, setShowUsers] = useState<boolean>(false);
   const handleOpenUsers = () => setShowUsers(true);
   const handleCloseUsers = () => setShowUsers(false);
-  const uri: string = "http://localhost:3000/api/users";
+  const uri: string = "/api/users";
 
   async function fetchDataUser() {
     await axios
