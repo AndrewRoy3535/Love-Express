@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Fragment } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -33,7 +33,7 @@ const Appbar: React.FC<AppBarProps> = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <AppBar
         position='fixed'
         color='transparent'
@@ -73,7 +73,7 @@ const Appbar: React.FC<AppBarProps> = () => {
         }}>
         <Lists toggleDrawer={toggleDrawer} />
       </Drawer>
-    </>
+    </Fragment>
   );
 };
 

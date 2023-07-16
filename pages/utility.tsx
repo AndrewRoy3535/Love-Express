@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Fragment } from "react";
 import CreateBusSchedule from "../component/create_bus_schedule/CreateBusSchedule";
 import CreateUser from "../component/create_user/CreateUser";
 import FormHeader from "../component/form_header/FormHeader";
@@ -50,7 +50,7 @@ function Utility() {
   }
 
   return (
-    <>
+    <Fragment>
       <FormHeader
         title='Create User'
         description='Fill out this form bellow to create new user'
@@ -74,7 +74,7 @@ function Utility() {
         setChangevalue={setChangevalue}
         destination={destination}
       />
-    </>
+    </Fragment>
   );
 }
 

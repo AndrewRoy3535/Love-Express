@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useContext } from "react";
+import React, { useMemo, useCallback, useContext, Fragment } from "react";
 import { Box, SelectChangeEvent } from "@mui/material";
 import dayjs from "dayjs";
 import FirstHalfForm from "./FirstHalfForm";
@@ -108,7 +108,7 @@ const CreateBusSchedule = ({ destinations }: Props) => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <Box
         component='form'
         className='container_schedule'
@@ -125,7 +125,7 @@ const CreateBusSchedule = ({ destinations }: Props) => {
         />
       </Box>
       <ModalScheduleList />
-    </>
+    </Fragment>
   );
 };
 export default CreateBusSchedule;

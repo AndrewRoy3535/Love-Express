@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import SearchedData from "../component/searched_data/SearchedData";
 import ScheduleContext from "../context/ScheduleContext";
 import SearchBus from "../component/search_bus/SearchBus";
@@ -22,16 +22,16 @@ function Searches({ destination }: Props) {
   }
 
   return (
-    <>
+    <Fragment>
       {!session ? (
         <Login />
       ) : (
-        <>
+        <Fragment>
           <SearchBus destinations={destination} />
           <SearchedData data={searchedBusData} />
-        </>
+        </Fragment>
       )}
-    </>
+    </Fragment>
   );
 }
 

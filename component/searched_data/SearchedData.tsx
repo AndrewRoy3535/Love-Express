@@ -1,7 +1,5 @@
-import React from "react";
-import { useRouter } from "next/router";
+import React, { Fragment } from "react";
 import { CreateBusType, SearchedDataType } from "../types/types";
-import { Table, TableRow, TableCell, TableHead } from "@material-ui/core";
 import {
   Accordion,
   AccordionSummary,
@@ -37,7 +35,7 @@ function SearchedData({ data }: SearchedDataType) {
   };
 
   return (
-    <>
+    <Fragment>
       {newData?.map((row: CreateBusType, i, passengerInSchedule) =>
         row.fare === 0 ? (
           <div key={i}>
@@ -107,7 +105,7 @@ function SearchedData({ data }: SearchedDataType) {
           </Accordion>
         )
       )}
-    </>
+    </Fragment>
   );
 }
 
