@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext, useState, Fragment } from "react";
 import CreateBusSchedule from "../component/create_bus_schedule/CreateBusSchedule";
 import CreateUser from "../component/create_user/CreateUser";

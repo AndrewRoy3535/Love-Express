@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext, Fragment } from "react";
 import SearchedData from "../component/searched_data/SearchedData";
 import ScheduleContext from "../context/ScheduleContext";
