@@ -1,9 +1,0 @@
-.fontStyle {
-  @apply uppercase font-bold text-black/70;
-}
-.fontStyleInfo {
-  @apply first:capitalize text-white/70;
-}
-.tableStyle {
-  @apply bg-black/30 backdrop-blur-xl;
-}
