@@ -15,7 +15,7 @@ type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
-function utility() {
+function Utility() {
   const { data: session, status } = useSession({ required: true });
 
   const { schedules } = useContext(ScheduleContext);
@@ -78,4 +78,4 @@ function utility() {
   );
 }
 
-export default utility;
+export default Utility;
