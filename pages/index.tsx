@@ -1,12 +1,12 @@
+"use client";
 import React from "react";
 import { Box } from "@mui/material";
 import SearchBus from "../component/search_bus/SearchBus";
 import NavTabs from "../component/tabs/NavTab";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import Login from "./login";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../component/loading/Loading";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
@@ -14,17 +14,9 @@ type Props = {
 
 export default function Home({ destination }: Props) {
   const { status } = useSession();
-  const router = useRouter();
+
   if (status === "loading") {
-    return (
-      <Box
-        display='flex'
-        alignItems='center'
-        justifyContent='center'
-        height='100vh'>
-        <CircularProgress />
-      </Box>
-    );
+    return <Loading />;
   }
 
   return (

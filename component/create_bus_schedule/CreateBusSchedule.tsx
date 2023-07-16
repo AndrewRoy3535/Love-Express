@@ -13,7 +13,7 @@ type Props = {
 };
 
 const CreateBusSchedule = ({ destinations }: Props) => {
-  const { busSchedule, setBusSchedule, setIsSuccSdl } =
+  const { busSchedule, setBusSchedule, setIsSuccSdl, fetchDataSchedule } =
     useContext<SetBusScheduleType>(ScheduleContext);
 
   const inputScheduleRef = useMemo(() => busSchedule, [busSchedule]);
@@ -96,6 +96,7 @@ const CreateBusSchedule = ({ destinations }: Props) => {
     setTimeout(() => {
       setIsSuccSdl(false);
     }, 5000);
+    fetchDataSchedule();
   };
 
   const handleDateChange = useCallback((date: Date | null) => {

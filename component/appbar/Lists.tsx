@@ -40,10 +40,12 @@ const Lists: React.FC<AppBarProps> = ({ toggleDrawer }) => {
                     alignItems: "center",
                     width: "100%",
                   }}>
-                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemIcon style={{ color: "#fff" }}>{icon}</ListItemIcon>
                   <ListItemText
                     primary={name}
-                    sx={{ textTransform: "capitalize" }}
+                    sx={{
+                      textTransform: "uppercase",
+                    }}
                   />
                 </Link>
               </ListItemButton>

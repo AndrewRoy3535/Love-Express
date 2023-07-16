@@ -12,6 +12,7 @@ const UserContext = createContext<CreateBusContextTypes>({
   setShowUsers: () => {},
   handleOpenUsers: () => {},
   handleCloseUsers: () => {},
+  fetchDataUser: async () => {},
 });
 
 export default UserContext;
@@ -32,16 +33,16 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
   const handleCloseUsers = () => setShowUsers(false);
   const uri: string = "http://localhost:3000/api/users";
 
+  async function fetchDataUser() {
+    await axios
+      .get(uri)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((e) => console.log(e));
+  }
   useEffect(() => {
-    async function fetchData() {
-      await axios
-        .get(uri)
-        .then((res) => {
-          setUsers(res.data);
-        })
-        .catch((e) => console.log(e));
-    }
-    fetchData();
+    fetchDataUser();
   }, []);
 
   return (
@@ -55,6 +56,7 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
         setShowUsers,
         handleCloseUsers,
         handleOpenUsers,
+        fetchDataUser,
       }}>
       {children}
     </UserContext.Provider>

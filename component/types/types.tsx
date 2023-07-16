@@ -47,6 +47,7 @@ export type BookingContextType = {
   setPassenger: React.Dispatch<React.SetStateAction<PassengerType>>;
   scheduleId?: string;
   totalPrice?: number;
+  fetchBooking?: () => Promise<void>;
 };
 
 export type SearchedDataType = {

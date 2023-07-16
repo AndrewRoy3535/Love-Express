@@ -69,12 +69,12 @@ function LoginForm() {
         `}</style>
       </Head>
       <Image
-        src={"/loginImg.jpg"}
+        src={"/body_bg.jpeg"}
         width={0}
         height={0}
         sizes='100vw'
         alt='me'
-        quality={100}
+        quality={50}
         style={{ width: "100%", position: "absolute", zIndex: -1 }}
       />
       <Box

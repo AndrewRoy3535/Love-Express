@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,22 +7,17 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ScheduleContext from "../../context/ScheduleContext";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
-import axios from "axios";
-import { useRouter } from "next/router";
-
-type SearchBusTypes = {
-  livingFrom: string;
-  goingTo: string;
-  date: string | null;
-};
+import { useSession } from "next-auth/react";
 
 type Props = {
   destinations: Array<{ place: string; _id: string }>;
 };
 
 function SearchBus({ destinations }: Props) {
-  const { handleSubmitsb, searchBus, setSearchBus } =
+  const { handleSubmitsb, searchBus, setSearchBus, totalTodaySale } =
     React.useContext(ScheduleContext);
+
+  const { data: session } = useSession();
 
   const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(0, "day"));
 
@@ -52,7 +47,12 @@ function SearchBus({ destinations }: Props) {
           name='livingFrom'
           value={searchBus.livingFrom}
           label='Living from'
-          onChange={handleChange}>
+          onChange={handleChange}
+          MenuProps={{
+            PaperProps: {
+              className: "inputfieldClass",
+            },
+          }}>
           {destinations.map((el, i) => {
             return (
               <MenuItem key={el._id} value={el.place}>
@@ -74,7 +74,12 @@ function SearchBus({ destinations }: Props) {
           name='goingTo'
           value={searchBus.goingTo}
           label='Living from'
-          onChange={handleChange}>
+          onChange={handleChange}
+          MenuProps={{
+            PaperProps: {
+              className: "inputfieldClass",
+            },
+          }}>
           {destinations.map((el, i) => {
             return (
               <MenuItem key={el._id} value={el.place}>
@@ -89,6 +94,7 @@ function SearchBus({ destinations }: Props) {
         inputFormat='D/M/YYYY'
         label='Select Date'
         value={value}
+        disablePast={session?.user?.admin ? false : true}
         onChange={(newValue) => setDate(newValue as Dayjs)}
         renderInput={(params) => <TextField {...params} />}
       />
@@ -98,6 +104,9 @@ function SearchBus({ destinations }: Props) {
         onClick={handleSubmitsb}>
         Search
       </Button>
+      <Typography className='todaySale'>
+        Total Purchase: {totalTodaySale} tk/=
+      </Typography>
     </Box>
   );
 }

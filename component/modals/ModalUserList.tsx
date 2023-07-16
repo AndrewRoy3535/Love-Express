@@ -42,10 +42,9 @@ function ModalUserList() {
   const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
-      const response = await axios.delete("http://localhost:3000/api/users", {
+      await axios.delete("http://localhost:3000/api/users", {
         data: { id: _id },
       });
-      console.log(response.data);
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== _id));
     } catch (error) {
       console.error(error);
@@ -60,7 +59,7 @@ function ModalUserList() {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'>
         <Box sx={style}>
-          <TableContainer component={Paper}>
+          <TableContainer>
             <Table
               sx={{ minWidth: 650 }}
               size='small'

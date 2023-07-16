@@ -30,7 +30,6 @@ function SearchResults({ rowId, passengers, price }: Props) {
 
   const { seats } = passenger;
   const totalPrice = seats.length * price;
-  console.log(totalPrice);
   const selectSeats = (seat: string) => {
     const findSeat = seats.find((el) => seat === el);
     if (findSeat === undefined) {

@@ -8,9 +8,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
+import { tConvert } from "../../utils/utility";
 
 const style = {
   position: "absolute" as "absolute",
@@ -34,25 +34,28 @@ const useStyles = makeStyles({
 });
 
 const ModalScheduleList = () => {
-  const { handleCloseSchedules, showSchedules, schedules, setSchedules } =
-    useContext(ScheduleContext);
+  const {
+    handleCloseSchedules,
+    showSchedules,
+    schedules,
+    setSchedules,
+    fetchDataSchedule,
+  } = useContext(ScheduleContext);
 
   const classes = useStyles();
 
   const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
-      const response = await axios.delete(
-        "http://localhost:3000/api/schedule/schedules",
-        {
-          data: { id: _id },
-        }
-      );
-      console.log(response.data);
+      await axios.delete("http://localhost:3000/api/schedule/schedules", {
+        data: { id: _id },
+      });
+
       setSchedules(schedules.filter((row) => row._id !== _id));
     } catch (error) {
       console.error(error);
     }
+    fetchDataSchedule();
   };
 
   return (
@@ -63,7 +66,7 @@ const ModalScheduleList = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'>
         <Box sx={style}>
-          <TableContainer component={Paper}>
+          <TableContainer>
             <Table
               size='small'
               className={classes.table}
@@ -112,7 +115,7 @@ const ModalScheduleList = () => {
                     <TableCell component='th' scope='row'>
                       {row.date}
                     </TableCell>
-                    <TableCell align='right'>{row.time}</TableCell>
+                    <TableCell align='right'>{tConvert(row.time)}</TableCell>
                     <TableCell align='right'>{row.startingCounter}</TableCell>
                     <TableCell align='right'>{row.endCounter}</TableCell>
                     <TableCell align='right'>{row.fare}</TableCell>

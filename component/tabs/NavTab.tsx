@@ -53,9 +53,7 @@ export default function NavTab() {
       <TabPanel value={value} index={0}>
         <SalesList />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
+      <TabPanel value={value} index={1}></TabPanel>
     </Box>
   );
 }

@@ -37,6 +37,9 @@ export interface SetBusScheduleType {
   handleSubmitsb: () => Promise<void>;
   searchBus: SearchBusTypes;
   setSearchBus: React.Dispatch<React.SetStateAction<SearchBusTypes>>;
+  totalTodaySale: number;
+  setTotalTodaySale: React.Dispatch<React.SetStateAction<number>>;
+  fetchDataSchedule: () => Promise<void>;
 }
 
 export interface CreateBusContextTypes {
@@ -48,4 +51,5 @@ export interface CreateBusContextTypes {
   setShowUsers: (showUser: any) => void;
   handleCloseUsers: () => void;
   handleOpenUsers: () => void;
+  fetchDataUser: () => Promise<void>;
 }

@@ -18,6 +18,7 @@ const BookingContext = createContext<BookingContextType>({
     cancel: false,
   },
   setPassenger: () => {},
+  fetchBooking: async () => {},
 });
 
 export default BookingContext;
@@ -52,7 +53,7 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   }, []);
 
   return (
-    <BookingContext.Provider value={{ passenger, setPassenger }}>
+    <BookingContext.Provider value={{ passenger, setPassenger, fetchBooking }}>
       {children}
     </BookingContext.Provider>
   );

@@ -9,10 +9,12 @@ import {
   InputLabel,
   SelectChangeEvent,
   Button,
+  Typography,
 } from "@mui/material";
 import { BookingContextType } from "../types/types";
 import axios from "axios";
 import ScheduleContext from "../../context/ScheduleContext";
+import BookingContext from "../../context/BookingContext";
 
 function CustomerForm({
   passenger,
@@ -35,8 +37,17 @@ function CustomerForm({
     });
   };
   const { handleSubmitsb } = React.useContext(ScheduleContext);
+  const { fetchBooking } = React.useContext(BookingContext);
+  const [btnstate, setBtnSate] = React.useState(true);
+  const [seatwarning, setSeatwarning] = React.useState(false);
   const customerFromSubmit = async (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setBtnSate(false);
+    if (passenger.seats.length === 0) {
+      setSeatwarning(true);
+      setBtnSate(true);
+      return;
+    }
     try {
       await axios
         .post("api/bookings", {
@@ -84,9 +95,11 @@ function CustomerForm({
       cancel: false,
     });
     setTimeout(() => {
-      // location.reload();
       handleSubmitsb();
+      if (fetchBooking !== undefined) fetchBooking();
     }, 1000);
+    setSeatwarning(false);
+    setBtnSate(true);
   };
 
   return (
@@ -94,11 +107,6 @@ function CustomerForm({
       component='form'
       className='container_schedule_form'
       onSubmit={customerFromSubmit}>
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Passenger Name
-      </FormLabel>
       <TextField
         required
         fullWidth
@@ -110,7 +118,7 @@ function CustomerForm({
         value={passenger.passengername}
         onChange={handleChange}
       />
-      <FormControl sx={{ width: "100%", marginTop: "15px" }}>
+      <FormControl sx={{ width: "100%" }}>
         <InputLabel id='CoachType' size='small'>
           Gender
         </InputLabel>
@@ -128,11 +136,6 @@ function CustomerForm({
           <MenuItem value='---'>---</MenuItem>
         </Select>
       </FormControl>
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Address
-      </FormLabel>
       <TextField
         required
         fullWidth
@@ -144,11 +147,6 @@ function CustomerForm({
         value={passenger.address}
         onChange={handleChange}
       />
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Boarding point
-      </FormLabel>
       <TextField
         required
         fullWidth
@@ -160,11 +158,7 @@ function CustomerForm({
         value={passenger.boardngpoint}
         onChange={handleChange}
       />
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Dropping point
-      </FormLabel>
+
       <TextField
         required
         fullWidth
@@ -176,11 +170,7 @@ function CustomerForm({
         value={passenger.dropingpoint}
         onChange={handleChange}
       />
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Mobile no
-      </FormLabel>
+
       <TextField
         required
         fullWidth
@@ -192,11 +182,7 @@ function CustomerForm({
         value={passenger.mobile}
         onChange={handleChange}
       />
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Email
-      </FormLabel>
+
       <TextField
         required
         fullWidth
@@ -208,11 +194,6 @@ function CustomerForm({
         value={passenger.email}
         onChange={handleChange}
       />
-      <FormLabel
-        id='demo-radio-buttons-group-label'
-        sx={{ marginTop: "10px !important" }}>
-        Age
-      </FormLabel>
       <TextField
         required
         fullWidth
@@ -224,7 +205,19 @@ function CustomerForm({
         value={passenger.age}
         onChange={handleChange}
       />
-      <Button type='submit'>Submit</Button>
+      <Button
+        type='submit'
+        variant='outlined'
+        color='inherit'
+        style={{
+          color: "#7f1d1d",
+        }}
+        disabled={btnstate ? false : true}>
+        {btnstate ? "Submit" : "Proccessing..."}
+      </Button>
+      <Typography sx={{ textTransform: "uppercase" }} color='rgb(127, 29, 29)'>
+        {seatwarning && "Seats are empty!"}
+      </Typography>
     </Box>
   );
 }

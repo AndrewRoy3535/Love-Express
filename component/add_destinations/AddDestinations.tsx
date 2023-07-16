@@ -38,33 +38,25 @@ function AddDestinations({
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 5, margin: "15px" }}>
-      <Box
-        sx={{
-          margin: "5px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          width: "20%",
-        }}>
-        <Input
-          placeholder='Add place'
-          value={changevalue}
-          onChange={handleChange}
-        />
-        <Button variant='outlined' onClick={addDes}>
-          Add
-        </Button>
-      </Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 5,
+        margin: "10px",
+        backgroundColor: "white",
+        padding: 2,
+        borderRadius: 3,
+      }}>
       <Box
         sx={{
           border: "1px solid #ccc",
           borderRadius: 2,
-          width: "20%",
+          width: "50%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: 2,
+          padding: "5px",
         }}>
         {destination?.map((des, i) => {
           return (
@@ -89,6 +81,23 @@ function AddDestinations({
             </Box>
           );
         })}
+      </Box>
+      <Box
+        sx={{
+          margin: "5px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          width: "20%",
+        }}>
+        <Input
+          placeholder='Add place'
+          value={changevalue}
+          onChange={handleChange}
+        />
+        <Button variant='outlined' onClick={addDes}>
+          Add
+        </Button>
       </Box>
     </Box>
   );

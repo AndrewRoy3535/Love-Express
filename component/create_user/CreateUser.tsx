@@ -12,7 +12,7 @@ import ModalUserList from "../modals/ModalUserList";
 import axios from "axios";
 
 const CreateUser = () => {
-  const { user, setUser, users, setUsers, handleOpenUsers } =
+  const { user, setUser, users, setUsers, handleOpenUsers, fetchDataUser } =
     useContext(UserContext);
 
   const [isMatch, setIsMatch] = useState<boolean>(true);
@@ -49,6 +49,7 @@ const CreateUser = () => {
       setIsSuccessful(true);
       setUser({ name: "", password: "", confirmpassword: "", admin: false });
     }
+    fetchDataUser();
   };
 
   const handleChange = useCallback(

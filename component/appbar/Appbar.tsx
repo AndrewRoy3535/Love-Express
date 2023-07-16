@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,8 +11,9 @@ import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 import Lists from "./Lists";
 import { AppBarProps } from "../types/interfaces";
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Appbar: React.FC<AppBarProps> = () => {
   const [toggle, setToggle] = React.useState<boolean>(false);
@@ -19,41 +21,48 @@ const Appbar: React.FC<AppBarProps> = () => {
     setToggle(!toggle);
   };
 
-  const { data: session } = useSession();
-  console.log(session);
+  const { data: session, update } = useSession({ required: true });
 
-  const handlesin = async () => {
-    await signIn();
-  };
   const hadlesinout = async () => {
-    await signOut();
+    try {
+      await signOut();
+    } catch (e) {
+      console.log(e);
+      redirect("/");
+    }
   };
+  console.log(session);
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position='fixed'>
-          <Toolbar>
-            <IconButton
-              size='small'
-              color='inherit'
-              aria-label='menu'
-              onClick={toggleDrawer}>
-              <MenuRounded fontSize='medium' />
-            </IconButton>
-            {session && (
-              <Typography
-                component='div'
-                sx={{ flexGrow: 1, fontSize: "28px" }}>
-                <Link href='/'>Hi, {session?.user?.name}</Link>
-              </Typography>
-            )}
-            <Button color='inherit' variant='outlined' onClick={hadlesinout}>
-              Sign Out
-            </Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <AppBar
+        position='fixed'
+        color='transparent'
+        sx={{ backgroundColor: "rgba(0,0,0,0.5)", color: "#ccc" }}>
+        <Toolbar>
+          <IconButton
+            size='small'
+            color='inherit'
+            aria-label='menu'
+            onClick={toggleDrawer}>
+            <MenuRounded fontSize='medium' />
+          </IconButton>
+          {session && (
+            <Typography
+              component='div'
+              sx={{
+                flexGrow: 1,
+
+                textTransform: "capitalize",
+              }}>
+              <Link href='/'>HI, {session?.user?.name}</Link>
+            </Typography>
+          )}
+          <Button color='inherit' variant='outlined' onClick={hadlesinout}>
+            Sign Out
+          </Button>
+        </Toolbar>
+      </AppBar>
       <Drawer
         open={toggle}
         onClose={toggleDrawer}

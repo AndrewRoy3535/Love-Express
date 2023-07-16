@@ -13,9 +13,9 @@
 }
 
 .selected {
-  @apply bg-lime-500 hover:bg-lime-500;
+  @apply bg-lime-700 hover:bg-lime-700;
 }
 
 .booked {
-  @apply cursor-default bg-red-500;
+  @apply cursor-default bg-red-900 !text-white/70;
 }

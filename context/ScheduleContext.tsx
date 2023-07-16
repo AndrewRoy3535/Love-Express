@@ -71,6 +71,9 @@ const ScheduleContext = createContext<SetBusScheduleType>({
     date: "",
   },
   setSearchBus: () => {},
+  totalTodaySale: 0,
+  setTotalTodaySale: () => {},
+  fetchDataSchedule: async () => {},
 });
 
 export default ScheduleContext;
@@ -120,6 +123,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
     goingTo: "",
     date: "",
   });
+  const [totalTodaySale, setTotalTodaySale] = React.useState<number>(0);
 
   const handleOpenSchedules = () => setShowSchedules(true);
   const handleCloseSchedules = () => {
@@ -127,16 +131,17 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
   };
   const uri: string = "http://localhost:3000/api/schedule/schedules";
 
+  async function fetchDataSchedule() {
+    await axios
+      .get(uri)
+      .then((res) => {
+        setSchedules(res.data);
+      })
+      .catch((e) => console.log(e));
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      await axios
-        .get(uri)
-        .then((res) => {
-          setSchedules(res.data);
-        })
-        .catch((e) => console.log(e));
-    }
-    fetchData();
+    fetchDataSchedule();
   }, []);
 
   const router = useRouter();
@@ -174,6 +179,9 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
         handleSubmitsb,
         searchBus,
         setSearchBus,
+        totalTodaySale,
+        setTotalTodaySale,
+        fetchDataSchedule,
       }}>
       {children}
     </ScheduleContext.Provider>

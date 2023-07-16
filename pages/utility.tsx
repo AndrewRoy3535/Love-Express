@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import CreateBusSchedule from "../component/create_bus_schedule/CreateBusSchedule";
 import CreateUser from "../component/create_user/CreateUser";
 import FormHeader from "../component/form_header/FormHeader";
@@ -6,14 +7,17 @@ import ScheduleContext from "../context/ScheduleContext";
 import UserContext from "../context/UserContext";
 import AddDestinations from "../component/add_destinations/AddDestinations";
 import axios from "axios";
-
-// should move the add destination button from AddDestination component to here inculding all the fetch funtions then pass it down to the child component...
+import { useSession } from "next-auth/react";
+import Login from "./login";
+import Loading from "../component/loading/Loading";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
 function utility() {
+  const { data: session, status } = useSession({ required: true });
+
   const { schedules } = useContext(ScheduleContext);
   const { users } = useContext(UserContext);
   const [changevalue, setChangevalue] = useState("");
@@ -36,6 +40,14 @@ function utility() {
     setDestination(data);
     setChangevalue("");
   };
+
+  if (status === "loading") {
+    return <Loading />;
+  }
+
+  if (!session) {
+    return <Login />;
+  }
 
   return (
     <>
