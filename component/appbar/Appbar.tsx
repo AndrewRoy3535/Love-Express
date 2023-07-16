@@ -31,7 +31,6 @@ const Appbar: React.FC<AppBarProps> = () => {
       redirect("/");
     }
   };
-  console.log(session);
 
   return (
     <>
