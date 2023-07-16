@@ -1,0 +1,6 @@
+.search_form_container {
+  @apply flex  gap-3 p-3 items-center;
+}
+.todaySale {
+  @apply ml-auto uppercase text-white/70;
+}
