@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Box, Input, Button, Typography } from "@mui/material";
 import axios from "axios";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { apiUri } from "../../utils/utility";
 
 type Props = {
   fetchDes: () => Promise<void>;
@@ -20,7 +21,7 @@ function AddDestinations({
 }: Props) {
   const deleteDes = async (_id: string) => {
     await axios
-      .delete("api/destinations", {
+      .delete(`${apiUri}/api/destinations`, {
         data: { id: _id },
       })
       .catch((err) => console.log(err));

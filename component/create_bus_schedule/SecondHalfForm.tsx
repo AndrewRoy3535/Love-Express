@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { CreateBusProps } from "../types/interfaces";
 import ScheduleContext from "../../context/ScheduleContext";
-import axios from "axios";
 
 function SecondHalfForm(props: CreateBusProps) {
   const { inputScheduleRef, handleChange, destinations } = props;

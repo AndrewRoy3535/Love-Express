@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { PassengerType, BookingContextType } from "../component/types/types";
 import axios from "axios";
+import { apiUri } from "../utils/utility";
 
 const BookingContext = createContext<BookingContextType>({
   passenger: {
@@ -43,7 +44,7 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
 
   async function fetchBooking() {
     await axios
-      .get("api/bookings")
+      .get(`${apiUri}/api/bookings`)
       .then((res) => setPassenger(res.data))
       .catch((error) => console.log(error));
   }

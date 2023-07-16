@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { CreateUserTypes, Users } from "../component/types/types";
 import { CreateBusContextTypes } from "../component/types/interfaces";
 import axios from "axios";
+import { apiUri } from "../utils/utility";
 
 const UserContext = createContext<CreateBusContextTypes>({
   user: { name: "", password: "", confirmpassword: "", admin: false },
@@ -31,7 +32,9 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
   const [showUser, setShowUsers] = useState<boolean>(false);
   const handleOpenUsers = () => setShowUsers(true);
   const handleCloseUsers = () => setShowUsers(false);
-  const uri: string = "/api/users";
+
+  // const uri: string = "/api/users";
+  const uri: string = `${apiUri}/api/users`;
 
   async function fetchDataUser() {
     await axios

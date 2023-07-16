@@ -10,7 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import { tConvert } from "../../utils/utility";
+import { tConvert, apiUri } from "../../utils/utility";
 
 const style = {
   position: "absolute" as "absolute",
@@ -47,7 +47,7 @@ const ModalScheduleList = () => {
   const handleDelete = async (row: { _id: string }): Promise<void> => {
     const { _id } = row;
     try {
-      await axios.delete("/api/schedule/schedules", {
+      await axios.delete(`${apiUri}/api/schedule/schedules`, {
         data: { id: _id },
       });
 

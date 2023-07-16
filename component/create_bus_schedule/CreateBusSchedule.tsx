@@ -7,6 +7,7 @@ import ScheduleContext from "../../context/ScheduleContext";
 import { SetBusScheduleType } from "../types/interfaces";
 import ModalScheduleList from "../modals/ModalScheduleList";
 import axios from "axios";
+import { apiUri } from "../../utils/utility";
 
 type Props = {
   destinations: Array<{ place: string; _id: string }>;
@@ -48,7 +49,7 @@ const CreateBusSchedule = ({ destinations }: Props) => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/schedule/schedules", {
+      .post(`${apiUri}/api/schedule/schedules`, {
         date: busSchedule.dateAndTime?.format("DD-MM-YYYY") as string,
         time: busSchedule.dateAndTime?.format("HH:mm") as string,
         coachType: inputScheduleRef.coachType,

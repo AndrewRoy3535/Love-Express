@@ -10,6 +10,7 @@ import {
 import UserContext from "../../context/UserContext";
 import ModalUserList from "../modals/ModalUserList";
 import axios from "axios";
+import { apiUri } from "../../utils/utility";
 
 const CreateUser = () => {
   const { user, setUser, users, setUsers, handleOpenUsers, fetchDataUser } =
@@ -28,7 +29,7 @@ const CreateUser = () => {
     } else {
       setIsMatch(true);
       await axios
-        .post("http://localhost:3000/api/users", {
+        .post(`${apiUri}/api/users`, {
           name: inputUserRef.name,
           password: inputUserRef.password,
           admin: inputUserRef.admin,

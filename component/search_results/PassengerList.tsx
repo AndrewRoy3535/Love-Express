@@ -12,6 +12,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import ScheduleContext from "../../context/ScheduleContext";
 import { useSession } from "next-auth/react";
+import { apiUri } from "../../utils/utility";
 
 export default function PassengerList({ passengers }: any) {
   const { handleSubmitsb } = React.useContext(ScheduleContext);
@@ -32,7 +33,7 @@ export default function PassengerList({ passengers }: any) {
 
   const deletePass = (_id: string) => {
     axios
-      .delete("api/bookings", {
+      .delete(`${apiUri}/api/bookings`, {
         data: { id: _id },
       })
       .catch((er) => console.log(er));

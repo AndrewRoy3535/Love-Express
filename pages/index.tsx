@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Login from "./login";
 import Loading from "../component/loading/Loading";
+import { apiUri } from "../utils/utility";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
@@ -31,8 +32,9 @@ export default function Home({ destination }: Props) {
     </Box>
   );
 }
+
 export async function getStaticProps() {
-  const response = await axios.get("http://localhost:3000/api/destinations");
+  const response = await axios.get(`${apiUri}/api/destinations`);
   const data = await response.data;
   return {
     props: { destination: data },

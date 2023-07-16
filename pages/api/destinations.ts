@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Destinations from "../../model/Destinations";
 import connection from "../../utils/connection";
-import querystring from "querystring";
 
 export default async function userHandler(
   req: NextApiRequest,

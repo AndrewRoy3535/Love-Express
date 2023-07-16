@@ -15,6 +15,7 @@ import { BookingContextType } from "../types/types";
 import axios from "axios";
 import ScheduleContext from "../../context/ScheduleContext";
 import BookingContext from "../../context/BookingContext";
+import { apiUri } from "../../utils/utility";
 
 function CustomerForm({
   passenger,
@@ -50,7 +51,7 @@ function CustomerForm({
     }
     try {
       await axios
-        .post("api/bookings", {
+        .post(`${apiUri}/api/bookings`, {
           scheduleId,
           passengername: passenger.passengername,
           gender: passenger.gender,
@@ -68,7 +69,7 @@ function CustomerForm({
           const { scheduleId } = res.data;
           const idd = res.data.id;
 
-          axios.patch(`api/schedule/${scheduleId}`, {
+          axios.patch(`${apiUri}/api/schedule/${scheduleId}`, {
             id: scheduleId,
             passengersId: idd,
           });
