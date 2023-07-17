@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import User from "../../model/User";
 import connection from "../../utils/connection";
 const bcrypt = require("bcrypt");
+import { NextResponse } from "next/server";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -15,6 +16,7 @@ export default async function userHandler(
     case "GET":
       try {
         const users = await User.find().select("-password").lean();
+
         if (!users?.length) {
           return res.status(400).json({ message: "No user found!" });
         }
