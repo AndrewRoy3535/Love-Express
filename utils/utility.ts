@@ -2,6 +2,7 @@ import { signIn } from "next-auth/react";
 
 export const apiUri =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+// export const apiUri = "http://localhost:3000";
 
 export function tConvert(time: any) {
   // Check correct time format and split into components
