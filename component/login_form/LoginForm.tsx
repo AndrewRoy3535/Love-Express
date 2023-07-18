@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography, FormLabel } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import BookingContext from "../../context/BookingContext";
 
 function LoginForm() {
   const router = useRouter();
@@ -16,6 +17,7 @@ function LoginForm() {
   });
 
   const [loginError, setloginError] = useState<boolean>(false);
+  const { errorFromBooking } = useContext(BookingContext);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -77,6 +79,7 @@ function LoginForm() {
         quality={50}
         style={{ width: "100%", position: "absolute", zIndex: -1 }}
       />
+      <Typography>{errorFromBooking}</Typography>
       <Box
         className='frosty'
         display='flex'

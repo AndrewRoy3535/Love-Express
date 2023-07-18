@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { PassengerType, BookingContextType } from "../component/types/types";
 import axios from "axios";
 import { apiUri } from "../utils/utility";
+import { AxiosError } from "axios";
 
 const BookingContext = createContext<BookingContextType>({
   passenger: {
@@ -20,6 +21,7 @@ const BookingContext = createContext<BookingContextType>({
   },
   setPassenger: () => {},
   fetchBooking: async () => {},
+  errorFromBooking: "",
 });
 
 export default BookingContext;
@@ -41,6 +43,7 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
     seats: [],
     cancel: false,
   });
+  const [errorFromBooking, setErrorFromBooking] = React.useState<string>("");
 
   const options = {
     headers: {
@@ -50,10 +53,33 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   };
 
   async function fetchBooking() {
-    await axios
-      .get(`${apiUri}/api/bookings`, options)
-      .then((res) => setPassenger(res.data))
-      .catch((error) => console.log(error));
+    try {
+      await axios
+        .get(`${apiUri}/api/bookings`, options)
+        .then((res) => setPassenger(res.data));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response) {
+          const { status, data } = axiosError.response;
+          if (status === 400) {
+            setErrorFromBooking((data as { message: string }).message);
+          } else {
+            setErrorFromBooking(
+              "An unexpected server error occurred. Please try again later."
+            );
+          }
+        } else if (error.message === "Network Error") {
+          setErrorFromBooking(
+            "Failed to fetch data. Please check your internet connection."
+          );
+        } else {
+          setErrorFromBooking(
+            "An unexpected error occurred. Please try again later."
+          );
+        }
+      }
+    }
   }
 
   useEffect(() => {
@@ -61,7 +87,8 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   }, []);
 
   return (
-    <BookingContext.Provider value={{ passenger, setPassenger, fetchBooking }}>
+    <BookingContext.Provider
+      value={{ passenger, setPassenger, fetchBooking, errorFromBooking }}>
       {children}
     </BookingContext.Provider>
   );

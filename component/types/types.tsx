@@ -48,6 +48,7 @@ export type BookingContextType = {
   scheduleId?: string;
   totalPrice?: number;
   fetchBooking?: () => Promise<void>;
+  errorFromBooking: string;
 };
 
 export type SearchedDataType = {
