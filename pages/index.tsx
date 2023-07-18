@@ -12,6 +12,14 @@ type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
+export async function getStaticProps() {
+  const response = await axios.get(`${apiUri}/api/destinations`);
+  const data = await response.data;
+  return {
+    props: { destination: data },
+  };
+}
+
 export default function Home({ destination }: Props) {
   const { status } = useSession();
 
@@ -31,12 +39,4 @@ export default function Home({ destination }: Props) {
       )}
     </Box>
   );
-}
-
-export async function getStaticProps() {
-  const response = await axios.get(`${apiUri}/api/destinations`);
-  const data = await response.data;
-  return {
-    props: { destination: data },
-  };
 }

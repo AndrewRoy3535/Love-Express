@@ -42,9 +42,16 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
     cancel: false,
   });
 
+  const options = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+    },
+  };
+
   async function fetchBooking() {
     await axios
-      .get(`${apiUri}/api/bookings`)
+      .get(`${apiUri}/api/bookings`, options)
       .then((res) => setPassenger(res.data))
       .catch((error) => console.log(error));
   }

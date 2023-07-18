@@ -130,12 +130,18 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
   const handleCloseSchedules = () => {
     setShowSchedules(false);
   };
-  // const uri: string = "/api/schedule/schedules";
+
   const uri: string = `${apiUri}/api/schedule/schedules`;
 
+  const options = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+    },
+  };
   async function fetchDataSchedule() {
     await axios
-      .get(uri)
+      .get(uri, options)
       .then((res) => {
         setSchedules(res.data);
       })
@@ -151,11 +157,15 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
   const handleSubmitsb = async () => {
     const { livingFrom, goingTo, date } = searchBus;
     axios
-      .post(urifindSche, {
-        livingFrom,
-        goingTo,
-        date,
-      })
+      .post(
+        urifindSche,
+        {
+          livingFrom,
+          goingTo,
+          date,
+        },
+        options
+      )
       .then((res) => {
         setSearchedBusData(res.data);
         router.push("/searches");

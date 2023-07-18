@@ -13,6 +13,14 @@ type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
+export async function getStaticProps() {
+  const response = await axios.get(`${apiUri}/api/destinations`);
+  const data = await response.data;
+  return {
+    props: { destination: data },
+  };
+}
+
 function Searches({ destination }: Props) {
   const { status, data: session } = useSession({ required: true });
   const { searchedBusData } = useContext(ScheduleContext);
@@ -33,14 +41,6 @@ function Searches({ destination }: Props) {
       )}
     </Fragment>
   );
-}
-
-export async function getStaticProps() {
-  const response = await axios.get(`${apiUri}/api/destinations`);
-  const data = await response.data;
-  return {
-    props: { destination: data },
-  };
 }
 
 export default Searches;
