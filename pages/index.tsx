@@ -13,11 +13,20 @@ type Props = {
 };
 
 export async function getStaticProps() {
-  const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
-  const data = await response.data;
-  return {
-    props: { destination: data },
-  };
+  try {
+    const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
+    const data = response.data;
+    const destination = data || null;
+
+    return {
+      props: { destination },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: { destination: null },
+    };
+  }
 }
 
 export default function Home({ destination }: Props) {

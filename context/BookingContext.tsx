@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { PassengerType, BookingContextType } from "../component/types/types";
 import axios from "axios";
 import { apiUri, axiosOption } from "../utils/utility";
-import { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
 const BookingContext = createContext<BookingContextType>({
   passenger: {
@@ -29,6 +29,7 @@ export default BookingContext;
 export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
+  const router = useRouter();
   const [passenger, setPassenger] = useState<PassengerType>({
     scheduleId: "",
     passengername: "",
@@ -51,27 +52,8 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
         .get(`${apiUri}/api/bookings`, axiosOption)
         .then((res) => setPassenger(res.data));
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response) {
-          const { status, data } = axiosError.response;
-          if (status === 400) {
-            setErrorFromBooking((data as { message: string }).message);
-          } else {
-            setErrorFromBooking(
-              "An unexpected server error occurred. Please try again later."
-            );
-          }
-        } else if (error.message === "Network Error") {
-          setErrorFromBooking(
-            "Failed to fetch data. Please check your internet connection."
-          );
-        } else {
-          setErrorFromBooking(
-            "An unexpected error occurred. Please try again later."
-          );
-        }
-      }
+      console.log(error);
+      router.push("/not-found");
     }
   }
 

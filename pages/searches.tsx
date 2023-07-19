@@ -2,23 +2,32 @@ import React, { useContext, Fragment } from "react";
 import SearchedData from "../component/searched_data/SearchedData";
 import ScheduleContext from "../context/ScheduleContext";
 import SearchBus from "../component/search_bus/SearchBus";
-import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Login from "./login";
 import Loading from "../component/loading/Loading";
 import { apiUri, axiosOption } from "../utils/utility";
+import { redirect } from "next/navigation";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
 export async function getStaticProps() {
-  const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
-  const data = await response.data;
-  return {
-    props: { destination: data },
-  };
+  try {
+    const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
+    const data = response.data;
+    const destination = data || null;
+
+    return {
+      props: { destination },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: { destination: null },
+    };
+  }
 }
 
 function Searches({ destination }: Props) {

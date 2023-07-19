@@ -139,7 +139,10 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
       .then((res) => {
         setSchedules(res.data);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        router.push("/not-found");
+        console.log(e);
+      });
   }
 
   useEffect(() => {
@@ -164,7 +167,10 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
         setSearchedBusData(res.data);
         router.push("/searches");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        router.push("/not-found");
+        console.log(err);
+      });
   };
 
   return (

@@ -3,6 +3,7 @@ import { CreateUserTypes, Users } from "../component/types/types";
 import { CreateBusContextTypes } from "../component/types/interfaces";
 import axios from "axios";
 import { apiUri, axiosOption } from "../utils/utility";
+import { useRouter } from "next/router";
 
 const UserContext = createContext<CreateBusContextTypes>({
   user: { name: "", password: "", confirmpassword: "", admin: false },
@@ -21,6 +22,7 @@ export default UserContext;
 export const UserProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
+  const router = useRouter();
   const [user, setUser] = useState<CreateUserTypes>({
     name: "",
     password: "",
@@ -41,7 +43,10 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
       .then((res) => {
         setUsers(res.data);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        router.push("/not-found");
+        console.log(e);
+      });
   }
   useEffect(() => {
     fetchDataUser();
