@@ -1,8 +1,8 @@
 import { signIn } from "next-auth/react";
 
-// export const apiUri =
-// process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-export const apiUri = "https://love-express-beta.vercel.app";
+export const apiUri =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+// export const apiUri = "https://love-express-beta.vercel.app/";
 
 export const axiosOption = {
   headers: {
