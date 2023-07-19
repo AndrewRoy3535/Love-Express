@@ -135,7 +135,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
 
   async function fetchDataSchedule() {
     await axios
-      .get(uri)
+      .get(uri, axiosOption)
       .then((res) => {
         setSchedules(res.data);
       })

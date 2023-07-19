@@ -14,7 +14,7 @@ type Props = {
 
 export async function getStaticProps() {
   try {
-    const response = await axios.get(`${apiUri}/api/destinations`);
+    const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
     const data = response.data;
     const destination = data || null;
 
