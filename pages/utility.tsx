@@ -31,11 +31,9 @@ function Utility() {
     fetchDes();
   };
   const fetchDes = async () => {
-    const res = await axios
-      .get(`${apiUri}/api/destinations`, axiosOption)
-      .catch((err) => {
-        console.log(err);
-      });
+    const res = await axios.get(`${apiUri}/api/destinations`).catch((err) => {
+      console.log(err);
+    });
     const data = res?.data;
     setDestination(data);
     setChangevalue("");

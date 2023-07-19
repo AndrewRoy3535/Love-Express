@@ -39,7 +39,7 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
 
   async function fetchDataUser() {
     await axios
-      .get(uri, axiosOption)
+      .get(uri)
       .then((res) => {
         setUsers(res.data);
       })

@@ -49,7 +49,7 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   async function fetchBooking() {
     try {
       await axios
-        .get(`${apiUri}/api/bookings`, axiosOption)
+        .get(`${apiUri}/api/bookings`)
         .then((res) => setPassenger(res.data));
     } catch (error) {
       console.log(error);
