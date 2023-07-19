@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Login from "./login";
 import Loading from "../component/loading/Loading";
-import { apiUri } from "../utils/utility";
+import { apiUri, axiosOption } from "../utils/utility";
 
 function Utility() {
   const { data: session, status } = useSession({ required: true });
@@ -31,7 +31,7 @@ function Utility() {
     fetchDes();
   };
   const fetchDes = async () => {
-    const res = await axios.get(`${apiUri}/api/destinations`);
+    const res = await axios.get(`${apiUri}/api/destinations`, axiosOption);
     const data = res.data;
     setDestination(data);
     setChangevalue("");
