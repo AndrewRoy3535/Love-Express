@@ -7,7 +7,7 @@ export const apiUri =
 export const axiosOption = {
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "content-type": "application/json",
+    // "content-type": "application/json",
   },
   timeout: 60000,
 };
