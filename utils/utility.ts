@@ -5,10 +5,10 @@ export const apiUri =
 // export const apiUri = "http://localhost:3000";
 
 export const axiosOption = {
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    // "content-type": "application/json",
-  },
+  // headers: {
+  //   "Access-Control-Allow-Origin": "*",
+  //   "content-type": "application/json",
+  // },
   timeout: 60000,
 };
 
