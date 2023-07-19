@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { PassengerType, BookingContextType } from "../component/types/types";
 import axios from "axios";
-import { apiUri } from "../utils/utility";
+import { apiUri, axiosOption } from "../utils/utility";
 import { AxiosError } from "axios";
 
 const BookingContext = createContext<BookingContextType>({
@@ -45,17 +45,10 @@ export const BookingProvider: React.FC<React.PropsWithChildren> = ({
   });
   const [errorFromBooking, setErrorFromBooking] = React.useState<string>("");
 
-  const options = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-    },
-  };
-
   async function fetchBooking() {
     try {
       await axios
-        .get(`${apiUri}/api/bookings`, options)
+        .get(`${apiUri}/api/bookings`, axiosOption)
         .then((res) => setPassenger(res.data));
     } catch (error) {
       if (axios.isAxiosError(error)) {

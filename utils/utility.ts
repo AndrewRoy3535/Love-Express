@@ -4,6 +4,14 @@ export const apiUri =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 // export const apiUri = "http://localhost:3000";
 
+export const axiosOption = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "content-type": "application/json",
+  },
+  timeout: 10000,
+};
+
 export function tConvert(time: any) {
   // Check correct time format and split into components
   time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [

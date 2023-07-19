@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { CreateUserTypes, Users } from "../component/types/types";
 import { CreateBusContextTypes } from "../component/types/interfaces";
 import axios from "axios";
-import { apiUri } from "../utils/utility";
+import { apiUri, axiosOption } from "../utils/utility";
 
 const UserContext = createContext<CreateBusContextTypes>({
   user: { name: "", password: "", confirmpassword: "", admin: false },
@@ -34,16 +34,10 @@ export const UserProvider: React.FC<React.PropsWithChildren> = ({
   const handleCloseUsers = () => setShowUsers(false);
 
   const uri: string = `${apiUri}/api/users`;
-  const options = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-    },
-  };
 
   async function fetchDataUser() {
     await axios
-      .get(uri, options)
+      .get(uri, axiosOption)
       .then((res) => {
         setUsers(res.data);
       })

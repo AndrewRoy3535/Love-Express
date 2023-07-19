@@ -4,7 +4,7 @@ import { CreateBusType, SearchBusTypes } from "../component/types/types";
 import { SetBusScheduleType } from "../component/types/interfaces";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { apiUri } from "../utils/utility";
+import { apiUri, axiosOption } from "../utils/utility";
 
 const ScheduleContext = createContext<SetBusScheduleType>({
   busSchedule: {
@@ -133,15 +133,9 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
 
   const uri: string = `${apiUri}/api/schedule/schedules`;
 
-  const options = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "application/json",
-    },
-  };
   async function fetchDataSchedule() {
     await axios
-      .get(uri, options)
+      .get(uri, axiosOption)
       .then((res) => {
         setSchedules(res.data);
       })
@@ -164,7 +158,7 @@ export const BusScheduleProvider: React.FC<React.PropsWithChildren> = (
           goingTo,
           date,
         },
-        options
+        axiosOption
       )
       .then((res) => {
         setSearchedBusData(res.data);
