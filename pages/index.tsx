@@ -1,3 +1,4 @@
+"use client";
 import React, { Fragment } from "react";
 import { Box } from "@mui/material";
 import SearchBus from "../component/search_bus/SearchBus";
