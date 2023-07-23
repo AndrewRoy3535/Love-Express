@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 import Login from "./login";
 import Loading from "../component/loading/Loading";
 import { apiUri, axiosOption } from "../utils/utility";
-import { redirect } from "next/navigation";
 
 type Props = {
   destination: Array<{ place: string; _id: string }>;
