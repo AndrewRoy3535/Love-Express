@@ -13,7 +13,7 @@ type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
     const data = response.data;
