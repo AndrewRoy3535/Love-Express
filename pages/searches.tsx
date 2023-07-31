@@ -13,11 +13,15 @@ type Props = {
   destination: Array<{ place: string; _id: string }>;
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ res }: any) {
   try {
     const response = await axios.get(`${apiUri}/api/destinations`, axiosOption);
     const data = response.data;
     const destination = data || null;
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=1800, stale-while-revalidate=86400"
+    );
 
     return {
       props: { destination },
