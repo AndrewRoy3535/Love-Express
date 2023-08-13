@@ -55,13 +55,20 @@ const options: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
-      user && (token.user = user);
-      return token;
+    // jwt: async ({ token, user }) => {
+    //   user && (token.user = user);
+    //   return token;
+    // },
+    // session: async ({ session, token }) => {
+    //   const user = token.user as IUser;
+    //   session.user = user;
+    //   return session;
+    // },
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
-    session: async ({ session, token }) => {
-      const user = token.user as IUser;
-      session.user = user;
+    async session({ session, token, user }) {
+      session.user = token as any;
       return session;
     },
   },

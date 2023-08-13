@@ -21,7 +21,7 @@ const Appbar: React.FC<AppBarProps> = () => {
     setToggle(!toggle);
   };
 
-  const { data: session, update } = useSession({ required: true });
+  const { data: session } = useSession({ required: true });
 
   const hadlesinout = async () => {
     try {
@@ -54,7 +54,7 @@ const Appbar: React.FC<AppBarProps> = () => {
 
                 textTransform: "capitalize",
               }}>
-              <Link href='/'>HI, {session?.user?.name}</Link>
+              <Link href='/'>HI, {session?.user?._doc.name}</Link>
             </Typography>
           )}
           <Button color='inherit' variant='outlined' onClick={hadlesinout}>

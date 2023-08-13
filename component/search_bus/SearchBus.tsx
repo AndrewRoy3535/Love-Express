@@ -94,7 +94,7 @@ function SearchBus({ destinations }: Props) {
         inputFormat='D/M/YYYY'
         label='Select Date'
         value={value}
-        disablePast={session?.user?.admin ? false : true}
+        disablePast={session?.user?._doc.admin ? false : true}
         onChange={(newValue) => setDate(newValue as Dayjs)}
         renderInput={(params) => <TextField {...params} />}
       />

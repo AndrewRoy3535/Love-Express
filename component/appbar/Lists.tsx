@@ -29,7 +29,9 @@ const Lists: React.FC<AppBarProps> = ({ toggleDrawer }) => {
             <ListItem disablePadding>
               <ListItemButton
                 disabled={
-                  !session?.user?.admin && name === "Utility" ? true : false
+                  !session?.user?._doc.admin && name === "Utility"
+                    ? true
+                    : false
                 }>
                 <Link
                   href={route}

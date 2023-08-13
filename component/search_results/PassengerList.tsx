@@ -98,7 +98,7 @@ export default function PassengerList({ passengers }: any) {
                   </TableCell>
                   <TableCell align='right'>
                     <Button
-                      disabled={!session?.user?.admin ? true : false}
+                      disabled={!session?.user?._doc.admin ? true : false}
                       color='warning'
                       onClick={() => deletePass(row._id)}>
                       <DeleteIcon />
