@@ -1,5 +1,5 @@
 export const apiUri =
-  process.env.NEXT_PUBLIC_API_URL || "https://love-express-beta.vercel.app";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export const axiosOption = {
   headers: {
