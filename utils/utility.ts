@@ -6,7 +6,7 @@ export const axiosOption = {
     "Access-Control-Allow-Origin": "*",
     "content-type": "application/json",
   },
-  timeout: 30000,
+  timeout: 8000,
 };
 
 export function tConvert(time: any) {
